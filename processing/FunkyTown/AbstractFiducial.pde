@@ -29,7 +29,7 @@ class AbstractFiducial {
   }
 
   void hide() {
-    this.visible = true;
+    this.visible = false;
   }
   
   void draw () {
