@@ -3,7 +3,7 @@ class StrictFiducial extends AbstractFiducial {
   float[] angle, rad, speed, xPos, yPos, diam;
   int[] nbConnex;
   int nbPts;
-  final static int RADIUS = 90;
+  final static int RADIUS = 20;
   int counter;
 
   StrictFiducial(int id) {
@@ -58,7 +58,7 @@ class StrictFiducial extends AbstractFiducial {
     pushMatrix();//pour la rotation
   translate(x,y);
 
-    stroke(0, 50);
+    stroke(0, 200);
     for (int i=0; i<nbPts-1; i++) {
       for (int j=i+1; j<nbPts; j++) {
         if (dist(xPos[i], yPos[i], xPos[j], yPos[j])<RADIUS+10) {
