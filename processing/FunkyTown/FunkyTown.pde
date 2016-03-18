@@ -17,8 +17,7 @@ void settings() {
 
 void setup() {
 
-  
-
+ 
   fiducialManager = new FiducialManager();
   fiducialManager.setup();
 

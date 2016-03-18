@@ -7,7 +7,14 @@ class FiducialManager {
 
   void setup() {
     fiducials = new ArrayList<AbstractFiducial>();
-    fiducials.add(new DebugFiducial(0));
+    // fiducials.add(new DebugFiducial(0));
+    fiducials.add(new FunFiducial(0));
+    fiducials.add(new NatureFiducial(1));
+    fiducials.add(new StrictFiducial(2));
+
+    for (int i=0; i<fiducials.size(); i++) {
+      fiducials.get(i).init();
+    }
   }
 
   void draw() {
@@ -32,14 +39,11 @@ class FiducialManager {
     int x        =   msg.get(2).intValue();
     int y        =   msg.get(3).intValue();
     int rotation =   msg.get(4).intValue();
-    
-    if(added == 1) {
+
+    if (added == 1) {
       onNewFiducialHandler(id);
     } 
-    onUpdateFiducialHandler(id,x,y,rotation);
-    
-    
-    
+    onUpdateFiducialHandler(id, x, y, rotation);
   }
 
   void onNewFiducialHandler(int id) {
@@ -53,7 +57,6 @@ class FiducialManager {
     fiducial.x         = x;
     fiducial.y         = y;
     fiducial.rotation  = rotation;
-    
   }
 
 
