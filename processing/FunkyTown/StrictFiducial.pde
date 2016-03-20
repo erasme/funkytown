@@ -12,7 +12,7 @@ class StrictFiducial extends AbstractFiducial {
 
   void init() {
     initialize();
-    counter =  126;
+    counter =  90;
         initialize();
 
 
@@ -22,10 +22,16 @@ class StrictFiducial extends AbstractFiducial {
 
   void show() {
     super.show();
+    background(0);
+    counter = counter + 6;
+    println (counter); 
   }
 
   void hide() {
     super.hide();
+    background(0);
+    counter = counter - 6;
+    println (counter); 
   }
 
 
@@ -44,10 +50,10 @@ class StrictFiducial extends AbstractFiducial {
     nbConnex = new int[nbPts];
     for (int i = 0; i<nbPts; i++) {
       angle[i] = random(TWO_PI);
-      rad[i] = int(random(1, 5)) * RADIUS;
+      rad[i] = int(random(1, 4)) * RADIUS;
       speed[i] = random(-.01, .01);
-      xPos[i] = width/2;
-      yPos[i] = height/2;
+      xPos[i] = width/4;
+      yPos[i] = height/4;
       nbConnex[i] = 0;
       diam[i] = 0;
     }
@@ -58,10 +64,10 @@ class StrictFiducial extends AbstractFiducial {
     pushMatrix();//pour la rotation
   translate(x,y);
 
-    stroke(0, 200);
+    stroke(0, 10);
     for (int i=0; i<nbPts-1; i++) {
       for (int j=i+1; j<nbPts; j++) {
-        if (dist(xPos[i], yPos[i], xPos[j], yPos[j])<RADIUS+10) {
+        if (dist(xPos[i], yPos[i], xPos[j], yPos[j])<RADIUS+0) {
           line(xPos[i], yPos[i], xPos[j], yPos[j]);
           nbConnex[i]++;
           nbConnex[j]++;
@@ -75,10 +81,10 @@ class StrictFiducial extends AbstractFiducial {
       xPos[i] = ease(xPos[i], width/2 + cos(angle[i]) * rad[i], 0.1);
       yPos[i] = ease(yPos[i], height/2 + sin(angle[i]) * rad[i], 0.1);
       diam[i] = ease(diam[i], min(nbConnex[i], 7)*(rad[i]/RADIUS), 0.1);
-      fill(255, 100);
-      ellipse(xPos[i], yPos[i], diam[i] + 16, diam[i] + 16);
+      fill(255, 50);
+      ellipse(xPos[i], yPos[i], diam[i] + 10, diam[i] + 10);
       fill(255);
-      ellipse(xPos[i], yPos[i], diam[i] + 5, diam[i] + 5);
+      ellipse(xPos[i], yPos[i], diam[i] + 1, diam[i] + 1);
 
       nbConnex[i] = 0;
     }
