@@ -12,7 +12,7 @@ FiducialManager fiducialManager;
 
 void settings() {
   size(640,480, P3D);
-  PJOGL.profile=1;
+  //PJOGL.profile=1;
 }
 
 void setup() {
@@ -24,7 +24,7 @@ void setup() {
   oscP5 = new OscP5(this, 12000);
   myBroadcastLocation = new NetAddress("127.0.0.1", 12345);
 
-  server = new SyphonServer(this, "FunkyTown Syphon");
+  //server = new SyphonServer(this, "FunkyTown Syphon");
 }
 
 void draw () {
@@ -33,7 +33,7 @@ void draw () {
   lights();
 
   fiducialManager.draw();
-  server.sendScreen();
+  //server.sendScreen();
 }
 
 void keyPressed () {

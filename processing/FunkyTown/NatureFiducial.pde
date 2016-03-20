@@ -16,6 +16,5 @@ class NatureFiducial extends AbstractFiducial {
   }
 
   void draw () {
-    debug();
   }
 }

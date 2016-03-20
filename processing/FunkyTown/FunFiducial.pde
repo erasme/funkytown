@@ -15,9 +15,6 @@ class FunFiducial extends AbstractFiducial {
     super.hide();
   }
 
-  void draw () {
-    
-    
-    
+  void draw () {    
   }
 }
