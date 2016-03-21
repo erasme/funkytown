@@ -104,3 +104,5 @@ class StrictFiducial extends AbstractFiducial {
     return variable;
   }
 }
+
+//cc rosalie
