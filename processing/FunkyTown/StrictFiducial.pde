@@ -9,8 +9,7 @@ class StrictFiducial extends AbstractFiducial {
   StrictFiducial(int id) {
     super(id);
     this.isLineConnected = true;
-        this.isParticleSender = true;
-
+    this.isParticleSender = true;
   }
 
   void init() {
@@ -21,7 +20,6 @@ class StrictFiducial extends AbstractFiducial {
 
     x= 130;
     y= 100;
-    
   }
 
   void show() {
@@ -82,8 +80,8 @@ class StrictFiducial extends AbstractFiducial {
     noStroke();
     for (int i=0; i<nbPts; i++) {
       angle[i] += speed[i];
-      xPos[i] = ease(xPos[i],  cos(angle[i]) * rad[i], 0.1);
-      yPos[i] = ease(yPos[i],  sin(angle[i]) * rad[i], 0.1);
+      xPos[i] = ease(xPos[i], cos(angle[i]) * rad[i], 0.1);
+      yPos[i] = ease(yPos[i], sin(angle[i]) * rad[i], 0.1);
       diam[i] = ease(diam[i], min(nbConnex[i], 7)*(rad[i]/RADIUS), 0.1);
       fill(255, 50);
       ellipse(xPos[i], yPos[i], diam[i] + 10, diam[i] + 10);
@@ -103,3 +101,4 @@ class StrictFiducial extends AbstractFiducial {
     if (abs(d)>1) variable+= d*easingVal;
     return variable;
   }
+}

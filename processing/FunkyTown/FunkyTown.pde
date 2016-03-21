@@ -5,7 +5,7 @@ import netP5.*;
 import oscP5.*;
 import codeanticode.syphon.*;
 
-public static boolean LIVE_MODE = false;
+public static boolean LIVE_MODE = true;
 
 
 boolean             bDebugMode = true;
