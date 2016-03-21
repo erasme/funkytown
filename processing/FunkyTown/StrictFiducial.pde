@@ -103,4 +103,3 @@ class StrictFiducial extends AbstractFiducial {
     if (abs(d)>1) variable+= d*easingVal;
     return variable;
   }
-}
