@@ -33,7 +33,8 @@ float xoff=0.0;
 
     pushMatrix();
     translate(x, y);
-
+    fill(255, 0, 0);
+    line(x, 10, x, 190);
     //  fill(255, 0, 0);
     //rect(0, 0, 10, 10);
     // ellipse(0, 0,  50 * cosPct, 50 * cosPct);
