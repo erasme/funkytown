@@ -32,9 +32,9 @@ int counter;
   i++;
   rotate(radians(i*-1));
   //fill(#12FFB2);
-  fill(255) ;
-  noFill();
-  stroke(255);
+  fill(0, 255, 255, 50);
+ // noFill();
+  stroke(8, 247, 184);
   strokeWeight(4);
   rectMode(CENTER);
   ellipse(0,0,15,15);
@@ -55,11 +55,7 @@ int counter;
   popMatrix();
   
   popMatrix();
-  
-    fill(0);
-    stroke(255);
-    rect(20, 20, 20, 20);
-    
+
 
     //stroke(0,100);
     //ellipse(0, 0, 100 + 100 * cosPct, 100 + 100*cosPct);

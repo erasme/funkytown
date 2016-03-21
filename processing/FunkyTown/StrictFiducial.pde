@@ -15,7 +15,7 @@ class StrictFiducial extends AbstractFiducial {
 
   void init() {
     initialize();
-    counter =  50;
+    counter =  20;
     initialize();
 
 
@@ -85,9 +85,9 @@ class StrictFiducial extends AbstractFiducial {
       xPos[i] = ease(xPos[i],  cos(angle[i]) * rad[i], 0.1);
       yPos[i] = ease(yPos[i],  sin(angle[i]) * rad[i], 0.1);
       diam[i] = ease(diam[i], min(nbConnex[i], 7)*(rad[i]/RADIUS), 0.1);
-      fill(255, 50);
+      fill(8, 247, 184, 50);
       ellipse(xPos[i], yPos[i], diam[i] + 10, diam[i] + 10);
-      fill(255);
+      fill(0, 255, 255);
       ellipse(xPos[i], yPos[i], diam[i] + 1, diam[i] + 1);
 
       nbConnex[i] = 0;
@@ -103,7 +103,6 @@ class StrictFiducial extends AbstractFiducial {
     if (abs(d)>1) variable+= d*easingVal;
     return variable;
 
-  }
-}
-}
+
+  } 
 }

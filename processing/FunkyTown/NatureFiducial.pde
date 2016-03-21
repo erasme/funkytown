@@ -30,7 +30,7 @@ class NatureFiducial extends AbstractFiducial {
     // first circle
     posX[0] = 0;
     posY[0] = 0;
-    r[0] = 20;
+    r[0] = 5;
   }
 
   void show() {
@@ -70,7 +70,7 @@ class NatureFiducial extends AbstractFiducial {
 
     for (int i=0; i < currentCount; i++) {
       noStroke();
-      fill(11, 255, 182);
+      fill(8, 247, 184, 100);
       ellipse(posX[i], posY[i], r[i]*2, r[i]*2);
     }
     if (currentCount >= maxCount) init();
