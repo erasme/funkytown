@@ -19,9 +19,8 @@ class StrictFiducial extends AbstractFiducial {
     initialize();
 
 
-     x= 430;
-     y= 100;
-  }
+    x= 130;
+    y= 100;
 
   void show() {
     super.show();

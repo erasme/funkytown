@@ -20,6 +20,7 @@ class NatureFiducial extends AbstractFiducial {
     x=150;
     y=400;
 
+
     currentCount = 1;
 
 
@@ -29,7 +30,7 @@ class NatureFiducial extends AbstractFiducial {
     // first circle
     posX[0] = 0;
     posY[0] = 0;
-    r[0] = 10;
+    r[0] = 20;
   }
 
   void show() {
@@ -47,12 +48,12 @@ class NatureFiducial extends AbstractFiducial {
     translate(x, y);
 
     // create a radom set of parameters
-    float newR = random(1, 3);
-    float newX = random(newR, width-newR);
-    float newY = random(newR, height-newR);
+    float newR = random(1, 7);
+    float newX = random(-width, width+newR);
+    float newY = random(-height, height+newR);
 
-    float closestDist = 50;
-    int closestIndex = 0;
+    float closestDist = 100;z
+    int closestIndex = 100;
     for (int i=0; i < currentCount; i++) {
       float newDist = dist(newX, newY, posX[i], posY[i]);
       if (newDist < closestDist) {
