@@ -13,7 +13,8 @@ class AbstractFiducial {
   boolean   isParticleSender;
   boolean   isParticleReceiver;
 
-
+  int       removeDelay;
+  int       countToRemove;
 
   AbstractFiducial (int id) {
 
@@ -23,6 +24,8 @@ class AbstractFiducial {
     this.y               = 0;
     this.rotation        = 0;
     this.isLineConnected = false;
+    this.countToRemove   = -1;
+    this.removeDelay     = 20;
 
     debugImage = loadImage("img.jpg");
   }
@@ -31,14 +34,27 @@ class AbstractFiducial {
   }
 
   void show() {
-    this.visible = true;
+    this.visible         = true;
+    this.countToRemove   = -1;
   }
 
   void hide() {
-    this.visible = false;
+    this.countToRemove   = 0;
   }
 
-  
+  void remove() {
+  }
+
+  void update() {
+
+    if (countToRemove >= 0 ) 
+      countToRemove++;
+
+    if (countToRemove >= removeDelay ) 
+      this.visible = false;
+  }
+
+
 
   void draw () {
 

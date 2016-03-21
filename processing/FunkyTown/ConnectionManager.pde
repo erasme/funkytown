@@ -17,6 +17,9 @@ class ConnectionManager {
 
       AbstractFiducial a = connecteds.get(i);
 
+      if (!a.visible)
+        continue;
+
       if (a.isParticleSender ) {
         emitParticles(a);
       }
@@ -50,18 +53,18 @@ class ConnectionManager {
   void emitParticles(AbstractFiducial a) {
     Particle p = new Particle();
     int range = 30;
-    
+
     float random   = random(1.0);
     p.damping      = .05 + random*.1;
     p.size         = 1 + random * 5;
     p.pos.x        = random(a.x - range, a.x + range);
     p.pos.y        = random(a.y - range, a.y + range);
-    
+
     particles.add(p);
   }
 
   void drawParticles(ArrayList<AbstractFiducial> receivers) {
-    
+
     // delete dead particles
     int length = particles.size();
     for (int j = length-1; j >= 0; j--) {

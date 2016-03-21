@@ -1,5 +1,6 @@
 class FunFiducial extends AbstractFiducial {
 
+
 float cosPct;
 float xoff=0.0;
 
@@ -17,6 +18,7 @@ boolean env01=true;
   void init() {
     x = 100;
     y = 100;
+
     px1 = new float[part];
     py1 = new float[part];
     velx = new float[part];
@@ -45,6 +47,22 @@ boolean env01=true;
 
     pushMatrix();
     translate(x, y);
+
+
+
+    if (focused) {
+      xoff = xoff + .01;
+      float  xoff2 = xoff + xoff;
+      noFill();
+      stroke(255, 15);
+      ellipseMode(CENTER);
+      ellipse(width/2, height/2, 500*noise(xoff2), 500*noise(xoff));
+    }
+
+
+    //  fill(255, 0, 0);
+    //rect(0, 0, 10, 10);
+    // ellipse(0, 0,  50 * cosPct, 50 * cosPct);
     noStroke();
     rectMode(CORNER);
     fill(0, 1);
