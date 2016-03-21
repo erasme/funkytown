@@ -56,14 +56,23 @@ class ConnectionManager {
   }
 
   void drawParticles(ArrayList<AbstractFiducial> receivers) {
+    
+    // delete dead particles
+    int length = particles.size();
+    for (int j = length-1; j >= 0; j--) {
+      if (particles.get(j).life > 100.0f ) {
+        particles.remove(j);
+      }
+    }
 
     for (int i=0; i<particles.size(); i++) {
-      particles.get(i).resetForce();
 
       if (particles.get(i).target == null & receivers.size() > 0 ) {
         int rdm = (int)random(receivers.size());
         particles.get(i).target = receivers.get(rdm);
       }
+      particles.get(i).resetForce();
+
       particles.get(i).updateTargets();
       particles.get(i).addDampingForce();
       particles.get(i).update();
