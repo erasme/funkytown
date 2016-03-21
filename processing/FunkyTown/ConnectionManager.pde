@@ -50,8 +50,13 @@ class ConnectionManager {
   void emitParticles(AbstractFiducial a) {
     Particle p = new Particle();
     int range = 30;
-    p.pos.x = random(a.x - range, a.x + range);
-    p.pos.y = random(a.y - range, a.y + range);
+    
+    float random   = random(1.0);
+    p.damping      = .05 + random*.1;
+    p.size         = 1 + random * 5;
+    p.pos.x        = random(a.x - range, a.x + range);
+    p.pos.y        = random(a.y - range, a.y + range);
+    
     particles.add(p);
   }
 
@@ -60,7 +65,7 @@ class ConnectionManager {
     // delete dead particles
     int length = particles.size();
     for (int j = length-1; j >= 0; j--) {
-      if (particles.get(j).life > 100.0f ) {
+      if (particles.get(j).life > 200.0f ) {
         particles.remove(j);
       }
     }

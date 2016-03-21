@@ -6,7 +6,7 @@ float xoff=0.0;
   FunFiducial(int id) {
     super(id);
     this.isLineConnected = true;
-    this.isParticleSender = true;
+    this.isParticleSender = false;
   }
 
   void init() {
