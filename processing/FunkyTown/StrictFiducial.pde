@@ -8,6 +8,7 @@ class StrictFiducial extends AbstractFiducial {
 
   StrictFiducial(int id) {
     super(id);
+    this.isLineConnected = true;
   }
 
   void init() {
@@ -16,8 +17,8 @@ class StrictFiducial extends AbstractFiducial {
     initialize();
 
 
-    // x= 430;
-    // y= 100;
+     x= 430;
+     y= 100;
   }
 
   void show() {
@@ -52,8 +53,8 @@ class StrictFiducial extends AbstractFiducial {
       angle[i] = random(TWO_PI);
       rad[i] = int(random(1, 4)) * RADIUS;
       speed[i] = random(-.01, .01);
-      xPos[i] = width/4;
-      yPos[i] = height/4;
+      xPos[i] = 0;
+      yPos[i] = 0;
       nbConnex[i] = 0;
       diam[i] = 0;
     }
@@ -78,8 +79,8 @@ class StrictFiducial extends AbstractFiducial {
     noStroke();
     for (int i=0; i<nbPts; i++) {
       angle[i] += speed[i];
-      xPos[i] = ease(xPos[i], width/2 + cos(angle[i]) * rad[i], 0.1);
-      yPos[i] = ease(yPos[i], height/2 + sin(angle[i]) * rad[i], 0.1);
+      xPos[i] = ease(xPos[i],  cos(angle[i]) * rad[i], 0.1);
+      yPos[i] = ease(yPos[i],  sin(angle[i]) * rad[i], 0.1);
       diam[i] = ease(diam[i], min(nbConnex[i], 7)*(rad[i]/RADIUS), 0.1);
       fill(255, 50);
       ellipse(xPos[i], yPos[i], diam[i] + 10, diam[i] + 10);
