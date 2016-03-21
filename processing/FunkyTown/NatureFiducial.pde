@@ -52,7 +52,7 @@ class NatureFiducial extends AbstractFiducial {
     float newX = random(-width, width+newR);
     float newY = random(-height, height+newR);
 
-    float closestDist = 100;z
+    float closestDist = 100;
     int closestIndex = 100;
     for (int i=0; i < currentCount; i++) {
       float newDist = dist(newX, newY, posX[i], posY[i]);
