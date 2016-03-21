@@ -7,11 +7,11 @@ class FiducialManager {
 
   void setup() {
     fiducials = new ArrayList<AbstractFiducial>();
-    fiducials.add(new FunFiducial(2));
+   // fiducials.add(new FunFiducial(2));
     fiducials.add(new NatureFiducial(1));
     fiducials.add(new StrictFiducial(0));
-    fiducials.add(new StrictFiducial(2));
-    fiducials.add(new MindFiducial(3));
+    //fiducials.add(new StrictFiducial(2));
+    //fiducials.add(new MindFiducial(3));
 
     for (int i=0; i<fiducials.size(); i++) {
       fiducials.get(i).init();
@@ -45,12 +45,13 @@ class FiducialManager {
     int y        =   msg.get(3).intValue();
     int rotation =   msg.get(4).intValue();
 
+    println(added);
+
     if (added == 1) {
-      //onNewFiducialHandler(id);
+      onUpdateFiducialHandler(id, x, y, rotation);
     } else if (added == -1) {
       onRemoveFiducialHandler(id);
     } else {
-      onUpdateFiducialHandler(id, x, y, rotation);
     }
   }
 

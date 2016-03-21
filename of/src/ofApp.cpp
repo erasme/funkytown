@@ -111,6 +111,8 @@ void ofApp::draw(){
         }
         
     }
+        
+        
     
     for (list<ofxFinger>::iterator finger = fidfinder.fingersList.begin(); finger != fidfinder.fingersList.end(); finger++) {
         finger->draw(20, 20);
