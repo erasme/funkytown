@@ -102,6 +102,12 @@ class StrictFiducial extends AbstractFiducial {
     float d = target - variable;
     if (abs(d)>1) variable+= d*easingVal;
     return variable;
+
   } 
 
 }
+
+
+}
+
+  }
