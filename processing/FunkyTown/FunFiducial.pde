@@ -6,7 +6,7 @@ class FunFiducial extends AbstractFiducial {
   FunFiducial(int id) {
     super(id);
     this.isLineConnected = true;
-    this.isParticleSender = true;
+    this.isParticleSender = false;
   }
 
   void init() {
