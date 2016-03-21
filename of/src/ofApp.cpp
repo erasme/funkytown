@@ -31,7 +31,6 @@ void ofApp::setup(){
     fidfinder.minFingerSize		= 5;
     fidfinder.fingerSensitivity	= 0.05f; //from 0 to 2.0f
     
-    
     oscSender.setup("localhost", 12345);
     syphonServer.setName("Funky Town Calibration Syphon");;
     
