@@ -55,11 +55,7 @@ int counter;
   popMatrix();
   
   popMatrix();
-  
-    fill(0);
-    stroke(255);
-    rect(20, 20, 20, 20);
-    
+
 
     //stroke(0,100);
     //ellipse(0, 0, 100 + 100 * cosPct, 100 + 100*cosPct);
