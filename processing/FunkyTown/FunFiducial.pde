@@ -1,7 +1,7 @@
 class FunFiducial extends AbstractFiducial {
 
   float cosPct;
-
+float xoff=0.0;
 
   FunFiducial(int id) {
     super(id);
@@ -13,6 +13,7 @@ class FunFiducial extends AbstractFiducial {
 
     x = 100;
     y = 100;
+
 
    
   }
@@ -33,9 +34,24 @@ class FunFiducial extends AbstractFiducial {
     pushMatrix();
     translate(x, y);
 
-    fill(255, 0, 0);
-    rect(0, 0, 10, 10);
-    ellipse(0, 0,  50 * cosPct, 50 * cosPct);
+
+
+  if(focused){
+  xoff = xoff + .01;
+  float  xoff2 = xoff + xoff;
+  noFill();
+  stroke(255, 15);
+  ellipseMode(CENTER);
+  ellipse(width/2, height/2, 500*noise(xoff2), 500*noise(xoff));
+  if (keyPressed) {
+    saveFrame("wallpaper-####.tif");
+  }
+  }
+
+
+  //  fill(255, 0, 0);
+  //rect(0, 0, 10, 10);
+   // ellipse(0, 0,  50 * cosPct, 50 * cosPct);
 
     popMatrix();
   }
