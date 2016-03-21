@@ -1,15 +1,15 @@
 class FunFiducial extends AbstractFiducial {
 
 
-float cosPct;
-float xoff=0.0;
+//float cosPct;
+//float xoff=0.0;
 
  
  
   FunFiducial(int id) {
     super(id);
-    this.isLineConnected = true;
-    this.isParticleSender = false;
+  //  this.isLineConnected = true;
+   // this.isParticleSender = false;
   }
 
   void init() {
@@ -28,13 +28,11 @@ float xoff=0.0;
 
   void draw () {
 
-    cosPct = .5 + cos((float)millis() / 100.0f) * .5;
+   // cosPct = .5 + cos((float)millis() / 100.0f) * .5;
 
 
     pushMatrix();
     translate(x, y);
-    fill(255, 0, 0);
-    line(x, 10, x, 190);
     //  fill(255, 0, 0);
     //rect(0, 0, 10, 10);
     // ellipse(0, 0,  50 * cosPct, 50 * cosPct);
