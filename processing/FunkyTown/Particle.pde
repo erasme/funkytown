@@ -13,6 +13,9 @@ class Particle {
   Particle() {
 
     damping = 0.1f;
+    
+    life    = 0.0f;
+    
 
     frc.set(0, 0);
     vel.set(0, 0);
@@ -38,6 +41,8 @@ class Particle {
 
     pos.x = pos.x + vel.x;
     pos.y = pos.y + vel.y;
+    
+    life++;
   }
 
   void addForce(float x, float y) {
