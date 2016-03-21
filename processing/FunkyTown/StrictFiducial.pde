@@ -15,7 +15,7 @@ class StrictFiducial extends AbstractFiducial {
 
   void init() {
     initialize();
-    counter =  20;
+    counter =  15;
     initialize();
 
 
@@ -68,7 +68,7 @@ class StrictFiducial extends AbstractFiducial {
     pushMatrix();//pour la rotation
     translate(x, y);
 
-    stroke(255, 150);
+    stroke(8, 247, 184, 150);
     for (int i=0; i<nbPts-1; i++) {
       for (int j=i+1; j<nbPts; j++) {
         if (dist(xPos[i], yPos[i], xPos[j], yPos[j])<RADIUS+1) {
@@ -85,7 +85,7 @@ class StrictFiducial extends AbstractFiducial {
       xPos[i] = ease(xPos[i],  cos(angle[i]) * rad[i], 0.1);
       yPos[i] = ease(yPos[i],  sin(angle[i]) * rad[i], 0.1);
       diam[i] = ease(diam[i], min(nbConnex[i], 7)*(rad[i]/RADIUS), 0.1);
-      fill(8, 247, 184, 50);
+      fill(8, 247, 184, 150);
       ellipse(xPos[i], yPos[i], diam[i] + 10, diam[i] + 10);
       fill(0, 255, 255);
       ellipse(xPos[i], yPos[i], diam[i] + 1, diam[i] + 1);
@@ -103,6 +103,6 @@ class StrictFiducial extends AbstractFiducial {
     if (abs(d)>1) variable+= d*easingVal;
     return variable;
 
-  } 
 
+  } 
 }
