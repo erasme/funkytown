@@ -38,7 +38,7 @@ class FunFiducial extends AbstractFiducial {
     for (int i=0; i<particles.size(); i++) {
       particles.get(i).resetForce();
       particles.get(i).addAttractionForce(mouseX, mouseY, 300, 10);
-     // particles.get(i).addRepulsionForce(mouseX, mouseY, 295, 100);
+      // particles.get(i).addRepulsionForce(mouseX, mouseY, 295, 100);
 
       particles.get(i).addDampingForce();
       particles.get(i).update();
