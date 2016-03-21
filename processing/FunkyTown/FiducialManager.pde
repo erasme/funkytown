@@ -34,7 +34,7 @@ class FiducialManager {
 
   void onOscMessageHandler(OscMessage msg) {
 
-    int id       = msg.get(0).intValue();
+    int id       =   msg.get(0).intValue();
     int added    =   msg.get(1).intValue();
     int x        =   msg.get(2).intValue();
     int y        =   msg.get(3).intValue();
@@ -59,6 +59,15 @@ class FiducialManager {
     fiducial.rotation  = rotation;
   }
 
+  ArrayList getConnectedFiducials() {
+
+    ArrayList<AbstractFiducial> connecteds = new ArrayList<AbstractFiducial>();
+    for (int i=0; i<fiducials.size(); i++) {
+      if(fiducials.get(i).visible) 
+        connecteds.add(fiducials.get(i));
+    }
+    return connecteds;
+  }
 
   void onRemovedFiducialHandler(int id) {
     fiducials.get(getFiducialIndexByID(id)).hide();

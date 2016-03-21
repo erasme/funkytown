@@ -2,27 +2,33 @@ import netP5.*;
 import oscP5.*;
 import codeanticode.syphon.*;
 
-boolean bDebugMode = true;
+boolean             bDebugMode = true;
 
-OscP5 oscP5;
-NetAddress myBroadcastLocation; 
+OscP5                oscP5;
+NetAddress           broadcastSettings; 
 
-SyphonServer server;
-FiducialManager fiducialManager;
+SyphonServer        server;
+FiducialManager     fiducialManager;
+ConnectionManager   connectionManager;
+
 
 void settings() {
-  size(640,480, P3D);
+  size(640, 480, P3D);
+
   //PJOGL.profile=1;
 }
 
 void setup() {
 
- 
-  fiducialManager = new FiducialManager();
+
+  fiducialManager     = new FiducialManager();
   fiducialManager.setup();
 
+  connectionManager = new ConnectionManager(fiducialManager);
+
+
   oscP5 = new OscP5(this, 12000);
-  myBroadcastLocation = new NetAddress("127.0.0.1", 12345);
+  broadcastSettings = new NetAddress("127.0.0.1", 12345);
 
   //server = new SyphonServer(this, "FunkyTown Syphon");
 }
@@ -32,6 +38,7 @@ void draw () {
   background(0);
   lights();
 
+  connectionManager.draw();
   fiducialManager.draw();
   //server.sendScreen();
 }

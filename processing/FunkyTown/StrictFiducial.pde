@@ -13,7 +13,7 @@ class StrictFiducial extends AbstractFiducial {
   void init() {
     initialize();
     counter =  50;
-        initialize();
+    initialize();
 
 
     // x= 430;
@@ -24,14 +24,14 @@ class StrictFiducial extends AbstractFiducial {
     super.show();
     background(0);
     counter = counter + 6;
-    println (counter); 
+    println (counter);
   }
 
   void hide() {
     super.hide();
     background(0);
     counter = counter - 6;
-    println (counter); 
+    println (counter);
   }
 
 
@@ -62,7 +62,7 @@ class StrictFiducial extends AbstractFiducial {
   void draw () {
 
     pushMatrix();//pour la rotation
-  translate(x,y);
+    translate(x, y);
 
     stroke(255, 150);
     for (int i=0; i<nbPts-1; i++) {
