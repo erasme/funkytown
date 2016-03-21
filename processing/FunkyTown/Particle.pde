@@ -1,26 +1,38 @@
 class Particle {
 
   float damping;
+  float size;
+  float life;
+
   PVector pos = new PVector();
   PVector frc = new PVector();
   PVector vel = new PVector();
 
+  AbstractFiducial target;
 
   Particle() {
 
-    damping = 0.99f;
-
-
+    damping = 0.1f;
 
     frc.set(0, 0);
     vel.set(0, 0);
+
+    size = 1 + random(3);
   }
 
   void resetForce() {
     frc.set(0, 0);
   }
 
+  void updateTargets() {
+    if (target != null) {
+      addAttractionForce(random(target.x - 30, target.x + 30), random(target.y - 30, target.y + 30), width*height, .5);
+      //addRepulsionForce(random(target.x - 30, target.x + 30), random(target.y - 30, target.y + 30), width*height, .3);
+    }
+  }
+
   void update() {
+
     vel.x = vel.x + frc.x;
     vel.y = vel.y + frc.y;
 
@@ -48,7 +60,7 @@ class Particle {
     PVector diff  = PVector.sub(pos, posOfForce);
     float length  = diff.mag();
 
-      boolean bAmCloseEnough = true;
+    boolean bAmCloseEnough = true;
     if (radius > 0) {
       if (length > radius) {
         bAmCloseEnough = false;
@@ -56,7 +68,7 @@ class Particle {
     }
 
     if (bAmCloseEnough == true) {
-      float pct = 1 - (length / radius);  // stronger on the inside
+      float pct = 1 - (length / radius); 
       diff.normalize();
       frc.x = frc.x + diff.x * scale * pct;
       frc.y = frc.y + diff.y * scale * pct;
@@ -80,7 +92,7 @@ class Particle {
     }
 
     if (bAmCloseEnough == true) {
-      float pct = 1 - (length / radius);  // stronger on the inside
+      float pct = 1 - (length / radius); 
       diff.normalize();
       frc.x = frc.x - diff.x * scale * pct;
       frc.y = frc.y - diff.y * scale * pct;

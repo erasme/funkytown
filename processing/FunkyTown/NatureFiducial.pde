@@ -9,14 +9,16 @@ class NatureFiducial extends AbstractFiducial {
 
   NatureFiducial(int id) {
     super(id);
-    this.isLineConnected = true;
+    this.isLineConnected = false;
+    this.isParticleReceiver = true;
+
     x = 300;
-    y = 100;
+    y = 500;
   }
 
   void init() {
     x=150;
-    y=150;
+    y=400;
 
     currentCount = 1;
 
