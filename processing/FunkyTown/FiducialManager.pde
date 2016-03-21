@@ -7,7 +7,6 @@ class FiducialManager {
 
   void setup() {
     fiducials = new ArrayList<AbstractFiducial>();
-    // fiducials.add(new DebugFiducial(0));
     fiducials.add(new FunFiducial(0));
     fiducials.add(new NatureFiducial(1));
     fiducials.add(new StrictFiducial(2));
