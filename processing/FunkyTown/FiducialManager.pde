@@ -10,6 +10,7 @@ class FiducialManager {
     fiducials.add(new FunFiducial(0));
     fiducials.add(new NatureFiducial(1));
     fiducials.add(new StrictFiducial(2));
+    fiducials.add(new MindFiducial(3));
 
     for (int i=0; i<fiducials.size(); i++) {
       fiducials.get(i).init();
