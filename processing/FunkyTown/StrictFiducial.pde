@@ -102,7 +102,11 @@ class StrictFiducial extends AbstractFiducial {
     float d = target - variable;
     if (abs(d)>1) variable+= d*easingVal;
     return variable;
+<<<<<<< HEAD
   }
 }
 
 //cc rosalie
+=======
+  }
+>>>>>>> 9a180e050735ad0f77fc8a26ae250bb6f3fe0c8b

@@ -21,7 +21,11 @@ class FiducialManager {
   void draw() {
 
     for (int i=0; i<fiducials.size(); i++) {
-      fiducials.get(i).draw();
+
+      fiducials.get(i).update();
+
+      if (fiducials.get(i).visible)
+        fiducials.get(i).draw();
     }
   }
 
@@ -43,14 +47,21 @@ class FiducialManager {
 
     if (added == 1) {
       //onNewFiducialHandler(id);
-    } 
-    onUpdateFiducialHandler(id, x, y, rotation);
-    
+    } else if (added == -1) {
+      onRemoveFiducialHandler(id);
+    } else {
+      onUpdateFiducialHandler(id, x, y, rotation);
+    }
   }
 
   void onNewFiducialHandler(int id) {
     fiducials.get(getFiducialIndexByID(id)).show();
   }
+
+  void onRemoveFiducialHandler(int id) {     
+    fiducials.get(getFiducialIndexByID(id)).hide();
+  }
+
 
   void onUpdateFiducialHandler(int id, int x, int y, int rotation) {
 
@@ -65,7 +76,7 @@ class FiducialManager {
 
     ArrayList<AbstractFiducial> connecteds = new ArrayList<AbstractFiducial>();
     for (int i=0; i<fiducials.size(); i++) {
-      if(fiducials.get(i).visible) 
+      if (fiducials.get(i).visible) 
         connecteds.add(fiducials.get(i));
     }
     return connecteds;

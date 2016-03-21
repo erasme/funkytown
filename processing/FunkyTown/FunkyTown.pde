@@ -1,3 +1,6 @@
+import de.looksgood.ani.*;
+import de.looksgood.ani.easing.*;
+
 import netP5.*;
 import oscP5.*;
 import codeanticode.syphon.*;
@@ -29,13 +32,11 @@ void setup() {
 
   if (LIVE_MODE) {
 
-    /* create a new osc properties object */
     OscProperties properties = new OscProperties();
     properties.setRemoteAddress("127.0.0.1", 12345);
     properties.setListeningPort(12345);
     properties.setSRSP(OscProperties.ON);
     properties.setDatagramSize(64000);
-
 
     oscP5 = new OscP5(this, properties);
 
