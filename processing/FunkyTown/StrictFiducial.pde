@@ -12,7 +12,7 @@ class StrictFiducial extends AbstractFiducial {
 
   void init() {
     initialize();
-    counter =  90;
+    counter =  50;
         initialize();
 
 
@@ -64,10 +64,10 @@ class StrictFiducial extends AbstractFiducial {
     pushMatrix();//pour la rotation
   translate(x,y);
 
-    stroke(0, 10);
+    stroke(255, 150);
     for (int i=0; i<nbPts-1; i++) {
       for (int j=i+1; j<nbPts; j++) {
-        if (dist(xPos[i], yPos[i], xPos[j], yPos[j])<RADIUS+0) {
+        if (dist(xPos[i], yPos[i], xPos[j], yPos[j])<RADIUS+1) {
           line(xPos[i], yPos[i], xPos[j], yPos[j]);
           nbConnex[i]++;
           nbConnex[j]++;
