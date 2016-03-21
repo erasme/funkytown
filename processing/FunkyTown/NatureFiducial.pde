@@ -25,8 +25,8 @@ class NatureFiducial extends AbstractFiducial {
     //frameRate(10);
 
     // first circle
-    posX[0] = width/2;
-    posY[0] = height/2;
+    posX[0] = 0;
+    posY[0] = 0;
     r[0] = 10;
   }
 
