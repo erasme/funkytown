@@ -2,6 +2,9 @@ import netP5.*;
 import oscP5.*;
 import codeanticode.syphon.*;
 
+public static boolean LIVE_MODE = false;
+
+
 boolean             bDebugMode = true;
 
 OscP5                oscP5;
@@ -14,7 +17,8 @@ ConnectionManager   connectionManager;
 void settings() {
   size(640, 480, P3D);
 
-  //PJOGL.profile=1;
+  if (LIVE_MODE)
+    PJOGL.profile=1;
 }
 
 void setup() {
@@ -25,9 +29,10 @@ void setup() {
 
   connectionManager = new ConnectionManager(fiducialManager);
 
-  oscP5 = new OscP5(this, 12000);
-  broadcastSettings = new NetAddress("127.0.0.1", 12345);
-
+  if (LIVE_MODE) {
+    oscP5 = new OscP5(this, 12000);
+    broadcastSettings = new NetAddress("127.0.0.1", 12345);
+  }
 }
 
 void draw () {
@@ -36,19 +41,13 @@ void draw () {
 
   connectionManager.draw();
   fiducialManager.draw();
-  //server.sendScreen();
+
+  if (LIVE_MODE) {
+    server.sendScreen();
+  }
 }
 
 void keyPressed () {
-
-  if (bDebugMode) {
-
-    if ( key == 'a') {
-    }
-
-    if ( key == 'r') {
-    }
-  }
 }
 
 /* incoming osc message are forwarded to the oscEvent method. */
