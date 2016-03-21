@@ -8,8 +8,6 @@ public static boolean LIVE_MODE = false;
 boolean             bDebugMode = true;
 
 OscP5                oscP5;
-NetAddress           broadcastSettings; 
-
 SyphonServer        server;
 FiducialManager     fiducialManager;
 ConnectionManager   connectionManager;
@@ -30,8 +28,18 @@ void setup() {
   connectionManager = new ConnectionManager(fiducialManager);
 
   if (LIVE_MODE) {
-    oscP5 = new OscP5(this, 12000);
-    broadcastSettings = new NetAddress("127.0.0.1", 12345);
+
+    /* create a new osc properties object */
+    OscProperties properties = new OscProperties();
+    properties.setRemoteAddress("127.0.0.1", 12345);
+    properties.setListeningPort(12345);
+    properties.setSRSP(OscProperties.ON);
+    properties.setDatagramSize(64000);
+
+
+    oscP5 = new OscP5(this, properties);
+
+    server = new SyphonServer(this, "FunkyTown Syphon");
   }
 }
 

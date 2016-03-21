@@ -11,7 +11,7 @@ boolean env01=true;
   FunFiducial(int id) {
     super(id);
     this.isLineConnected = true;
-    this.isParticleSender = true;
+    this.isParticleSender = false;
   }
 
   void init() {

@@ -6,7 +6,8 @@ void ofApp::setup(){
     
     bIsFullScreen = false;
     
-    ofSetVerticalSync(true);
+   // ofSetVerticalSync(true);
+    ofSetFrameRate(15);
     kinect.setRegistration(true);
     
     kinect.init(true);
@@ -31,7 +32,7 @@ void ofApp::setup(){
     fidfinder.fingerSensitivity	= 0.05f; //from 0 to 2.0f
     
     
-    oscSender.setup("localhost", 12000);
+    oscSender.setup("localhost", 12345);
     syphonServer.setName("Funky Town Calibration Syphon");;
     
 }
@@ -61,7 +62,7 @@ void ofApp::update(){
         } else {
             grayDiff = grayImage;
         }
-        grayDiff.blur();
+       // grayDiff.blur();
         grayDiff.threshold(threshold);
         fidfinder.findFiducials( grayDiff );
     }
@@ -83,7 +84,7 @@ void ofApp::draw(){
     grayDiff.draw(camWidth + 40,camHeight + 40);
         
         
-    syphonServer.publishTexture(&grayImage.getTexture());
+   // syphonServer.publishTexture(&grayImage.getTexture());
      
     for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
         
@@ -96,14 +97,18 @@ void ofApp::draw(){
         
         checkIfFiducialExists(&*fiducial);
         
+        
+        if(ofGetFrameNum() % 4 == 0 ) {
         message.setAddress("/fiducial");
         message.addIntArg(fiducial->getId());
         message.addIntArg(0);
         message.addIntArg(fiducial->getX());
         message.addIntArg(fiducial->getY());
         message.addIntArg(fiducial->getAngleDeg());
-        oscSender.sendMessage(message, false);
+        //oscSender.sendMessage(message, false);
         message.clear();
+            
+        }
         
     }
     
@@ -159,8 +164,8 @@ void ofApp::keyPressed  (int key){
         ofToggleFullscreen();
         bIsFullScreen = !bIsFullScreen;
     }
-
-
+    
+   
 }
 
 //--------------------------------------------------------------

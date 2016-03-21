@@ -9,7 +9,7 @@ class StrictFiducial extends AbstractFiducial {
   StrictFiducial(int id) {
     super(id);
     this.isLineConnected = true;
-        this.isParticleReceiver = true;
+        this.isParticleSender = true;
 
   }
 
