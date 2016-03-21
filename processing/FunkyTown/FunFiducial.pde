@@ -32,7 +32,7 @@ int i;
 
     cosPct = .5 + cos((float)millis() / 100.0f) * .5;
   
-  background(0);
+  //background(0);
   i++;
   pushMatrix();
   translate(x,y);

@@ -62,7 +62,10 @@ void ofApp::update(){
             grayDiff = grayImage;
         }
        // grayDiff.blur();
-        grayDiff.threshold(threshold);
+        //grayDiff.threshold(threshold);
+        grayDiff.adaptiveThreshold(threshold);
+
+        
         fidfinder.findFiducials( grayDiff );
     }
     
@@ -77,13 +80,40 @@ void ofApp::draw(){
 
     } else {
     
-    colorImg.draw(20,20);
+//    colorImg.draw(20,20);
     grayImage.draw(camWidth + 40,20);
     grayBg.draw(20,camHeight + 40);
-    grayDiff.draw(camWidth + 40,camHeight + 40);
+    grayDiff.draw(20,20);
         
         
    // syphonServer.publishTexture(&grayImage.getTexture());
+        
+    // check for removed
+    for(int i=0; i<fiducials.size(); i++) {
+        bool bExists = false;
+        for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
+            
+            if(fiducial->getId() == fiducials[i]) {
+                bExists = true;
+                continue;
+            }
+         
+        
+        }
+        
+        if(!bExists) {
+            message.setAddress("/fiducial");
+            message.addIntArg(fiducials[i]);
+            message.addIntArg(-1);
+            message.addIntArg(0);
+            message.addIntArg(0);
+            message.addIntArg(0);
+            //oscSender.sendMessage(message, false);
+            message.clear();
+            
+        }
+    }
+    
      
     for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
         
@@ -97,7 +127,6 @@ void ofApp::draw(){
         checkIfFiducialExists(&*fiducial);
         
         
-        if(ofGetFrameNum() % 4 == 0 ) {
         message.setAddress("/fiducial");
         message.addIntArg(fiducial->getId());
         message.addIntArg(0);
@@ -106,11 +135,21 @@ void ofApp::draw(){
         message.addIntArg(fiducial->getAngleDeg());
         //oscSender.sendMessage(message, false);
         message.clear();
+        
+        
             
-        }
+        
         
     }
+        fiducials.clear();
+
+        for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
+
+            fiducials.push_back(fiducial->getId());
+
+        }
         
+
         
     
     for (list<ofxFinger>::iterator finger = fidfinder.fingersList.begin(); finger != fidfinder.fingersList.end(); finger++) {
