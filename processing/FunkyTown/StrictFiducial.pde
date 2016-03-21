@@ -16,6 +16,5 @@ class StrictFiducial extends AbstractFiducial {
   }
 
   void draw () {
-    debug();
   }
 }

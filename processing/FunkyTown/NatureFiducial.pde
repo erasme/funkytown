@@ -2,6 +2,10 @@ class NatureFiducial extends AbstractFiducial {
 
   NatureFiducial(int id) {
     super(id);
+    this.isLineConnected = true;
+    x = 300;
+    y = 100;
+    
   }
 
   void init() {
@@ -16,6 +20,7 @@ class NatureFiducial extends AbstractFiducial {
   }
 
   void draw () {
-    debug();
+    
+    rect(x,y,30,30);
   }
 }

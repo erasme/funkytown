@@ -8,13 +8,17 @@ class AbstractFiducial {
   int       rotation;
   
   PImage    debugImage;
+  
+  boolean   isLineConnected;
 
   AbstractFiducial (int id) {
-    this.id        = id;
-    this.visible   = false;
-    this.x         = 0;
-    this.y         = 0;
-    this.rotation  = 0;
+    
+    this.id              = id;
+    this.visible         = true;
+    this.x               = 0;
+    this.y               = 0;
+    this.rotation        = 0;
+    this.isLineConnected = false;
     
    debugImage = loadImage("img.jpg");
 
@@ -33,6 +37,16 @@ class AbstractFiducial {
   }
   
   void draw () {
+    
+  }
+  
+  float getNormalizedDistanceTo (AbstractFiducial target) {
+    PVector a     = new PVector(x,y);
+    PVector b     = new PVector(target.x, target.y);
+    PVector diff  = PVector.sub(a, b);
+    float length  = diff.mag();
+    
+    return length / (float)width; 
     
   }
 
