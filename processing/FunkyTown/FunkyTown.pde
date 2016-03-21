@@ -11,7 +11,6 @@ SyphonServer        server;
 FiducialManager     fiducialManager;
 ConnectionManager   connectionManager;
 
-
 void settings() {
   size(640, 480, P3D);
 
@@ -26,17 +25,14 @@ void setup() {
 
   connectionManager = new ConnectionManager(fiducialManager);
 
-
   oscP5 = new OscP5(this, 12000);
   broadcastSettings = new NetAddress("127.0.0.1", 12345);
 
-  //server = new SyphonServer(this, "FunkyTown Syphon");
 }
 
 void draw () {
 
   background(0);
-  lights();
 
   connectionManager.draw();
   fiducialManager.draw();

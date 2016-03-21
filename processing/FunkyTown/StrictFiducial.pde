@@ -9,6 +9,8 @@ class StrictFiducial extends AbstractFiducial {
   StrictFiducial(int id) {
     super(id);
     this.isLineConnected = true;
+        this.isParticleReceiver = true;
+
   }
 
   void init() {
@@ -19,6 +21,8 @@ class StrictFiducial extends AbstractFiducial {
 
     x= 130;
     y= 100;
+    
+  }
 
   void show() {
     super.show();

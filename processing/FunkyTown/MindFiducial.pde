@@ -25,6 +25,8 @@ class MindFiducial extends AbstractFiducial {
     fill(255, 0, 0);
     rect(0, 0, 10, 10);
     ellipse(0, 0, 100, 100);
+    //ellipse(0, 0, 100 + 100 * cosPct, 100 + 100*cosPct);
+
 
     popMatrix();
   }
