@@ -1,7 +1,7 @@
 class DebugFiducial extends AbstractFiducial {
 
-  DebugFiducial(int id) {
-    super(id);
+  DebugFiducial(int id, MidiBus midi) {
+    super(id, midi);
   }
 
   void init() {

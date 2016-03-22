@@ -2,8 +2,8 @@ class MindFiducial extends AbstractFiducial {
 int i;
 int counter;
 
-  MindFiducial(int id) {
-    super(id);
+  MindFiducial(int id, MidiBus midi) {
+    super(id, midi);
   }
 
   void init() {

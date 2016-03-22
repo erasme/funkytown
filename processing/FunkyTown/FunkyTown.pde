@@ -1,4 +1,5 @@
-import promidi.*;
+import themidibus.*;
+
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 import netP5.*;
@@ -12,11 +13,10 @@ boolean             bDebugMode = true;
 
 OscP5               oscP5;
 SyphonServer        server;
-MidiIO              midiIO;
-MidiOut             midiOut;
+MidiBus             midi; 
 FiducialManager     fiducialManager;
 ConnectionManager   connectionManager;
-UIPanel  uipanel;
+UIPanel              uipanel;
 
 void settings() {
   size(640, 480, P3D);
@@ -27,16 +27,7 @@ void settings() {
 
 void setup() {
 
-
-  fiducialManager     = new FiducialManager();
-  fiducialManager.setup();
-
-  connectionManager = new ConnectionManager(fiducialManager);
-  
-  uipanel = new UIPanel();
-  uipanel.setup();
-
-  if (LIVE_MODE) {
+if (LIVE_MODE) {
 
     OscProperties properties = new OscProperties();
     properties.setRemoteAddress("127.0.0.1", 12000);
@@ -47,11 +38,18 @@ void setup() {
     oscP5 = new OscP5(this, properties);
 
     server = new SyphonServer(this, "FunkyTown Syphon");
+    midi = new MidiBus(this, -1, "Java Sound Synthesizer"); // Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
 
-    midiIO = MidiIO.getInstance(this);
-    midiIO.printDevices();
-    midiOut = midiIO.getMidiOut(0, 0);
   }
+  
+  fiducialManager     = new FiducialManager();
+  fiducialManager.setup(midi);
+
+  connectionManager = new ConnectionManager(fiducialManager);
+  
+  uipanel = new UIPanel();
+  uipanel.setup();
+  
 }
 
 void draw () {
@@ -61,7 +59,7 @@ void draw () {
   connectionManager.draw();
   fiducialManager.draw();
   uipanel.draw();
-  
+
 
   if (LIVE_MODE) {
     server.sendScreen();

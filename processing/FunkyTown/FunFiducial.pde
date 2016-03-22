@@ -7,8 +7,9 @@ int i;
 
  
  
-  FunFiducial(int id) {
-    super(id);
+  FunFiducial(int id, MidiBus midi) {
+    super(id, midi);
+  
   //  this.isLineConnected = true;
    // this.isParticleSender = false;
   }
