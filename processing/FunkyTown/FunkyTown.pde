@@ -16,6 +16,7 @@ MidiIO              midiIO;
 MidiOut             midiOut;
 FiducialManager     fiducialManager;
 ConnectionManager   connectionManager;
+UIPanel  uipanel;
 
 void settings() {
   size(640, 480, P3D);
@@ -31,6 +32,9 @@ void setup() {
   fiducialManager.setup();
 
   connectionManager = new ConnectionManager(fiducialManager);
+  
+  uipanel = new UIPanel();
+  uipanel.setup();
 
   if (LIVE_MODE) {
 
@@ -56,6 +60,8 @@ void draw () {
 
   connectionManager.draw();
   fiducialManager.draw();
+  uipanel.draw();
+  
 
   if (LIVE_MODE) {
     server.sendScreen();
