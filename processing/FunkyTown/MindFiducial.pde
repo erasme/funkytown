@@ -4,7 +4,6 @@ class MindFiducial extends AbstractFiducial {
 
   MindFiducial(int id, MidiBus midi) {
     super(id, midi);
-    this.name = "MindFiducial";
   }
 
   void init() {

@@ -8,7 +8,6 @@ class StrictFiducial extends AbstractFiducial {
 
   StrictFiducial(int id, MidiBus midi) {
     super(id, midi);
-    this.name = "StrictFiducial";
     this.isLineConnected = true;
     this.isParticleSender = true;
   }

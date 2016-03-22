@@ -9,7 +9,6 @@ class NatureFiducial extends AbstractFiducial {
 
   NatureFiducial(int id, MidiBus midi) {
     super(id, midi);
-    this.name = "NatureFiducial";
     this.isLineConnected = false;
     this.isParticleReceiver = true;
 

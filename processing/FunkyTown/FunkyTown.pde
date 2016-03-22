@@ -1,5 +1,4 @@
 import themidibus.*;
-
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 import netP5.*;
@@ -8,7 +7,6 @@ import codeanticode.syphon.*;
 
 public static boolean LIVE_MODE = false;
 
-
 boolean             bDebugMode = true;
 
 OscP5               oscP5;
@@ -16,11 +14,11 @@ SyphonServer        server;
 MidiBus             midi; 
 FiducialManager     fiducialManager;
 ConnectionManager   connectionManager;
-UIPanel              uipanel;
+UIPanel             uipanel;
 
 void settings() {
+  
   size(640, 480, P3D);
-
   if (LIVE_MODE)
     PJOGL.profile=1;
 }
@@ -39,7 +37,7 @@ void setup() {
 
     server = new SyphonServer(this, "FunkyTown Syphon");
     MidiBus.list();
-    midi = new MidiBus(this, -1, "Bus 1"); // Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+    midi = new MidiBus(this, -1, "Bus 1");
   }
 
   fiducialManager     = new FiducialManager();
@@ -49,6 +47,7 @@ void setup() {
 
   uipanel = new UIPanel();
   uipanel.setup();
+  
 }
 
 void update() {
@@ -58,7 +57,6 @@ void update() {
 void draw () {
   
   update();
-  
   
   background(0);
 
@@ -78,9 +76,7 @@ void keyPressed () {
 
 }
 
-/* incoming osc message are forwarded to the oscEvent method. */
 void oscEvent(OscMessage msg) {
-  //println(msg.checkAddrPattern("/fiducial"));
   if (msg.checkAddrPattern("/fiducial") == true) {
     fiducialManager.onOscMessageHandler(msg);
   }

@@ -6,7 +6,7 @@ class FunFiducial extends AbstractFiducial {
 
   FunFiducial(int id, MidiBus midi) {
     super(id, midi);
-    this.name = "FunFiducial";
+    //this.name = "FunFiducial";
    
   }
 

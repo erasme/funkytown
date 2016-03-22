@@ -35,7 +35,8 @@ class AbstractFiducial {
     this.countToRemove   = -1;
     this.removeDelay     = 20;
     this.cumulativePct   = 0.0f;
-
+    this.name            = this.getClass().getSimpleName();
+    
   }
 
   void init() {

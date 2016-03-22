@@ -4,22 +4,20 @@ class FiducialManager {
   ArrayList<AbstractFiducial> connecteds;
 
   FiducialManager() {
-    
+
     fiducials = new ArrayList<AbstractFiducial>();
     connecteds = new ArrayList<AbstractFiducial>();
-    
   }
 
   void setup(MidiBus midi) {
 
 
-    fiducials.add(new FunFiducial(2, midi));
-    fiducials.add(new FunFiducial(0, midi));
-    fiducials.add(new NatureFiducial(1, midi));
-    fiducials.add(new StrictFiducial(2, midi));
-    fiducials.add(new MindFiducial(3, midi));
-    fiducials.add(new MindFiducial(7, midi));
-
+    fiducials.add(new FunFiducial    (2, midi));
+    fiducials.add(new FunFiducial    (0, midi));
+    fiducials.add(new NatureFiducial (1, midi));
+    fiducials.add(new StrictFiducial (2, midi));
+    fiducials.add(new MindFiducial   (3, midi));
+    fiducials.add(new MindFiducial   (7, midi));
 
     for (int i=0; i<fiducials.size(); i++) {
       fiducials.get(i).init();
@@ -59,15 +57,16 @@ class FiducialManager {
     float y        =   abs(msg.get(3).floatValue());
     float rotation =   abs(msg.get(4).floatValue());
 
+    // don't ask me why why
     if (x == -100.0 && y == -100.0 && rotation == 360.0 )
       return;
 
-    if (added == 0) {
-      onUpdateFiducialHandler(id, (int)x, (int)y, (int)rotation);
-    } else if (added == 2) {
-      onRemoveFiducialHandler(id);
-    } else {
+    if (added == 1) {
       onNewFiducialHandler(id);
+    } else if (added == 0) {
+      onUpdateFiducialHandler(id, (int)x, (int)y, (int)rotation);
+    } else {
+      onRemoveFiducialHandler(id);
     }
   }
 
@@ -75,18 +74,17 @@ class FiducialManager {
     fiducials.get(getFiducialIndexByID(id)).show();
   }
 
-  void onRemoveFiducialHandler(int id) {     
-    fiducials.get(getFiducialIndexByID(id)).hide();
-  }
-
-
   void onUpdateFiducialHandler(int id, int x, int y, int rotation) {
 
     AbstractFiducial fiducial = fiducials.get(getFiducialIndexByID(id));
-
     fiducial.x         = x;
     fiducial.y         = y;
     fiducial.rotation  = rotation;
+    
+  }
+
+  void onRemoveFiducialHandler(int id) {     
+    fiducials.get(getFiducialIndexByID(id)).hide();
   }
 
   ArrayList getConnectedFiducials() {
