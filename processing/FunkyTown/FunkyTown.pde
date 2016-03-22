@@ -5,7 +5,7 @@ import netP5.*;
 import oscP5.*;
 import codeanticode.syphon.*;
 
-public static boolean LIVE_MODE = false;
+public static boolean LIVE_MODE = true;
 
 boolean             bDebugMode = true;
 
@@ -17,7 +17,7 @@ ConnectionManager   connectionManager;
 UIPanel             uipanel;
 
 void settings() {
-  
+
   size(640, 480, P3D);
   if (LIVE_MODE)
     PJOGL.profile=1;
@@ -30,7 +30,6 @@ void setup() {
     OscProperties properties = new OscProperties();
     properties.setRemoteAddress("127.0.0.1", 12000);
     properties.setListeningPort(12345);
-    properties.setSRSP(OscProperties.ON);
     properties.setDatagramSize(64000);
 
     oscP5 = new OscP5(this, properties);
@@ -40,14 +39,15 @@ void setup() {
     midi = new MidiBus(this, -1, "Bus 1");
   }
 
+  Ani.init(this);
+
   fiducialManager     = new FiducialManager();
   fiducialManager.setup(midi);
-  
+
   connectionManager = new ConnectionManager(fiducialManager);
 
   uipanel = new UIPanel();
   uipanel.setup();
-  
 }
 
 void update() {
@@ -55,9 +55,9 @@ void update() {
 }
 
 void draw () {
-  
+
   update();
-  
+
   background(0);
 
   connectionManager.draw();
@@ -71,13 +71,15 @@ void draw () {
 }
 
 void keyPressed () {
-  
-      //midi.sendNoteOn(10, 64, 127);
 
+  //midi.sendNoteOn(10, 64, 127);
 }
 
 void oscEvent(OscMessage msg) {
-  if (msg.checkAddrPattern("/fiducial") == true) {
-    fiducialManager.onOscMessageHandler(msg);
+  if (msg.typetag().equals("iifff")) {
+    if (msg.checkAddrPattern("/fiducial") == true) {
+      fiducialManager.onOscMessageHandler(msg);
+    }
+  } else {
   }
 }

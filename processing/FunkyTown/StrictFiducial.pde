@@ -24,16 +24,13 @@ class StrictFiducial extends AbstractFiducial {
 
   void show() {
     super.show();
-    background(0);
     counter = counter + 6;
-    println (counter);
   }
 
   void hide() {
     super.hide();
     background(0);
     counter = counter - 6;
-    println (counter);
   }
 
 
@@ -83,15 +80,13 @@ class StrictFiducial extends AbstractFiducial {
       xPos[i] = ease(xPos[i], cos(angle[i]) * rad[i], 0.1);
       yPos[i] = ease(yPos[i], sin(angle[i]) * rad[i], 0.1);
       diam[i] = ease(diam[i], min(nbConnex[i], 7)*(rad[i]/RADIUS), 0.1);
-      fill(8, 247, 184, 150);
+      fill(8*easedActivePct, 247*easedActivePct, 184*easedActivePct, 150*easedActivePct);
       ellipse(xPos[i], yPos[i], diam[i] + 10, diam[i] + 10);
-      fill(0, 255, 255);
+      fill(0.0*easedActivePct, 255.0*easedActivePct, 255.0*easedActivePct, 50.0*easedActivePct);
       ellipse(xPos[i], yPos[i], diam[i] + 1, diam[i] + 1);
 
       nbConnex[i] = 0;
     }
-
-
     popMatrix();
   }
 

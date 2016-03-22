@@ -11,12 +11,16 @@ class FiducialManager {
 
   void setup(MidiBus midi) {
 
-    fiducials.add(new FunFiducial    (2, midi));
+    fiducials.add(new FunFiducial    (1, midi));
+    fiducials.add(new MindFiducial (7, midi));
+
+    /*
     fiducials.add(new FunFiducial    (0, midi));
-    fiducials.add(new NatureFiducial (1, midi));
-    fiducials.add(new StrictFiducial (2, midi));
-    fiducials.add(new MindFiducial   (3, midi));
-    fiducials.add(new MindFiducial   (7, midi));
+     fiducials.add(new NatureFiducial (1, midi));
+     fiducials.add(new StrictFiducial (2, midi));
+     fiducials.add(new MindFiducial   (3, midi));
+     fiducials.add(new MindFiducial   (7, midi));
+     */
 
     for (int i=0; i<fiducials.size(); i++) {
       fiducials.get(i).init();
@@ -50,20 +54,22 @@ class FiducialManager {
 
   void onOscMessageHandler(OscMessage msg) {
 
-    int id       =   msg.get(0).intValue();
-    int added    =   msg.get(1).intValue();
-    float x        =   abs(msg.get(2).floatValue());
-    float y        =   abs(msg.get(3).floatValue());
-    float rotation =   abs(msg.get(4).floatValue());
+    int id         =   msg.get(0).intValue();
+    int added      =   msg.get(1).intValue();
+    float x        =   msg.get(2).floatValue();
+    float y        =   msg.get(3).floatValue();
+    float rotation =   radians(msg.get(4).floatValue());
+    
 
     // don't ask me why why
-    if (x == -100.0 && y == -100.0 && rotation == 360.0 )
-      return;
+    //if (x == -100.0 && y == -100.0 && rotation == 360.0 )
+    //return;
+
 
     if (added == 1) {
       onNewFiducialHandler(id);
     } else if (added == 0) {
-      onUpdateFiducialHandler(id, (int)x, (int)y, (int)rotation);
+      onUpdateFiducialHandler(id, (int)x, (int)y, rotation);
     } else {
       onRemoveFiducialHandler(id);
     }
@@ -73,13 +79,12 @@ class FiducialManager {
     fiducials.get(getFiducialIndexByID(id)).show();
   }
 
-  void onUpdateFiducialHandler(int id, int x, int y, int rotation) {
+  void onUpdateFiducialHandler(int id, int x, int y, float rotation) {
 
     AbstractFiducial fiducial = fiducials.get(getFiducialIndexByID(id));
     fiducial.x         = x;
     fiducial.y         = y;
     fiducial.rotation  = rotation;
-    
   }
 
   void onRemoveFiducialHandler(int id) {     
@@ -99,6 +104,7 @@ class FiducialManager {
 
   void updateConnectedsPct() {
     for (int i=0; i<fiducials.size(); i++) {
+
       fiducials.get(i).setCumulativePct(getConnectedsInPctFor(fiducials.get(i).name));
     }
   }
@@ -110,12 +116,16 @@ class FiducialManager {
 
     for (int i=0; i<fiducials.size(); i++) {
       boolean isSame = fiducials.get(i).name.equals(className);
+
       if (isSame) {
         result++;
         if (fiducials.get(i).visible)
           numConnecteds++;
       }
     }
+
+    if ( numConnecteds == 0 )
+      return 0;
 
     return (float)result / (float)numConnecteds;
   }

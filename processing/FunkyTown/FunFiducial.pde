@@ -7,7 +7,6 @@ class FunFiducial extends AbstractFiducial {
   FunFiducial(int id, MidiBus midi) {
     super(id, midi);
     //this.name = "FunFiducial";
-   
   }
 
   void init() {
@@ -29,15 +28,16 @@ class FunFiducial extends AbstractFiducial {
     cosPct = .5 + cos((float)millis() / 100.0f) * .5;
 
     int radius       = 25;
-    float lineLength = 20 + cumulativePct * 50;
-    
+    float lineLength = (20 + easedCumPct * 50);
+
     i++;
     pushMatrix();
     translate(x, y);
     rotate(rotation);
+    pushMatrix();
     rotate(radians(i*1));
     stroke(8, 247, 184);
-    strokeWeight(3);
+    strokeWeight(3*easedActivePct);
     line(radius, 0, lineLength, 0);
     rotate(radians(i*1.2));
     line(radius, 0, lineLength, 0);
@@ -51,6 +51,8 @@ class FunFiducial extends AbstractFiducial {
     line(radius, 0, lineLength, 0);
     rotate(radians(i*-0.7));
     line(radius, 0, lineLength, 0);
+    popMatrix();
+
     popMatrix();
   }
 }

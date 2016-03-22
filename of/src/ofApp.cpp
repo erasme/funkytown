@@ -58,8 +58,8 @@ void ofApp::update(){
         }
        
         // grayDiff.blur();
-        //grayDiff.threshold(threshold);
-        grayDiff.adaptiveThreshold(threshold);
+        grayDiff.threshold(threshold);
+        //grayDiff.adaptiveThreshold(threshold);
 
         
         fidfinder.findFiducials( grayDiff );
@@ -89,15 +89,16 @@ void ofApp::draw(){
         
         if(!bExists) {
             
+            ofxOscMessage       message;
 
             int id = fiducials[i];
             message.setAddress("/fiducial");
             message.addIntArg(id);
             message.addIntArg(2);
-            message.addFloatArg(99);
-            message.addFloatArg(19);
-            message.addFloatArg(3);
-            oscSender.sendMessage(message, true);
+            message.addFloatArg(0.0);
+            message.addFloatArg(0.0);
+            message.addFloatArg(0.0);
+            oscSender.sendMessage(message);
            // return;
         }
     }
@@ -115,17 +116,18 @@ void ofApp::draw(){
         int fiducialID  = fiducial->getId();
         float xPos      = fiducial->getX();
         float yPos      = fiducial->getY();
-        float angle     = fiducial->getAngle();
+        float angle     = fiducial->getAngleDeg();
         int state       = (exists) ? 0 : 1;
-        
+        ofxOscMessage       message;
+
         message.setAddress("/fiducial");
         message.addIntArg(fiducialID);
         message.addIntArg(state);
         message.addFloatArg(xPos);
         message.addFloatArg(yPos);
         message.addFloatArg(angle);
-        oscSender.sendMessage(message, true);
-        message.clear();
+        oscSender.sendMessage(message);
+        //message.clear();
         
     }
     

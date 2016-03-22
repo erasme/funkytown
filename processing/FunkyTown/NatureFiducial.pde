@@ -2,9 +2,9 @@ class NatureFiducial extends AbstractFiducial {
 
   int maxCount = 1000; //max count of the cirlces
   int currentCount = 1;
-  float[] posX = new float[maxCount];
-  float[] posY = new float[maxCount];
-  float[] r = new float[maxCount]; // radius
+  float[] posX = new float[3000];
+  float[] posY = new float[3000];
+  float[] r = new float[3000]; // radius
 
 
   NatureFiducial(int id, MidiBus midi) {
@@ -20,12 +20,7 @@ class NatureFiducial extends AbstractFiducial {
     x=150;
     y=400;
 
-
     currentCount = 1;
-
-
-    smooth();
-    //frameRate(10);
 
     // first circle
     posX[0] = 0;
@@ -67,15 +62,22 @@ class NatureFiducial extends AbstractFiducial {
     posX[currentCount] = posX[closestIndex] + cos(angle) * (r[closestIndex]+newR);
     posY[currentCount] = posY[closestIndex] + sin(angle) * (r[closestIndex]+newR);
     r[currentCount] = newR;
-    currentCount++;
-
-    for (int i=0; i < currentCount; i++) {
-      stroke(8, 247, 184, 100);
+    
+    maxCount = (int)(easedCumPct * 3000);
+    
+    if(currentCount < maxCount-1 ) {
+      currentCount++;
+    }
+    
+    int total = (currentCount > maxCount ) ? maxCount : currentCount;
+    for (int i=0; i < total; i++) {
+      stroke(8*easedActivePct, 247*easedActivePct, 184*easedActivePct, 100*easedActivePct);
       strokeWeight(4);
-      fill(0, 255, 255, 50);
+      fill(0.0*easedActivePct, 255.0*easedActivePct, 255.0*easedActivePct, 50.0*easedActivePct);
       ellipse(posX[i], posY[i], r[i]*2, r[i]*2);
     }
-    if (currentCount >= maxCount) init();
+    fill(255,255);
+    //if (currentCount >= maxCount) init();
     popMatrix();
   }
 }

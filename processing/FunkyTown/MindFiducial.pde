@@ -27,10 +27,13 @@ class MindFiducial extends AbstractFiducial {
 
     //?
     pushMatrix();
+    
+    
+    
     i++;
     rotate(radians(i*-1));
     //fill(#12FFB2);
-    fill(0, 255, 255, 50);
+    fill(0.0*easedActivePct, 255.0*easedActivePct, 255.0*easedActivePct, 50.0*easedActivePct);
     // noFill();
     stroke(8, 247, 184);
     strokeWeight(4);
@@ -51,13 +54,11 @@ class MindFiducial extends AbstractFiducial {
     rect(0, 0, 50, 50);
     rotate(radians(i*10));
     popMatrix();
+    
+    popMatrix();
 
     popMatrix();
 
-
-    //stroke(0,100);
-    //ellipse(0, 0, 100 + 100 * cosPct, 100 + 100*cosPct);
-
-    popMatrix();
+    fill(255, 255);
   }
 }
