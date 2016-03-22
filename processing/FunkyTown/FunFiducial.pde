@@ -4,8 +4,10 @@ class FunFiducial extends AbstractFiducial {
   float xoff=0.0;
   int i;
 
-  FunFiducial(int id, MidiBus midi) {
-    super(id, midi);
+  FunFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
+    super(id, midi, midiPitchOn,midiPitchOff);
+        this.isParticleReceiver = true;
+
     //this.name = "FunFiducial";
   }
 
@@ -33,10 +35,12 @@ class FunFiducial extends AbstractFiducial {
     i++;
     pushMatrix();
     translate(x, y);
+    fill(28*easedActivePct, 247*easedActivePct, 184*easedActivePct);
+    ellipse(0,0,lineLength/2*easedActivePct,lineLength/2*easedActivePct);
     rotate(rotation);
     pushMatrix();
     rotate(radians(i*1));
-    stroke(8, 247, 184);
+    stroke(8*easedActivePct, 247*easedActivePct, 184*easedActivePct);
     strokeWeight(3*easedActivePct);
     line(radius, 0, lineLength, 0);
     rotate(radians(i*1.2));

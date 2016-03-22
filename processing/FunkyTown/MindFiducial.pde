@@ -2,8 +2,8 @@ class MindFiducial extends AbstractFiducial {
   int i;
   int counter;
 
-  MindFiducial(int id, MidiBus midi) {
-    super(id, midi);
+  MindFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
+    super(id, midi, midiPitchOn,midiPitchOff);
   }
 
   void init() {
@@ -31,18 +31,18 @@ class MindFiducial extends AbstractFiducial {
     
     
     i++;
-    rotate(radians(i*-1));
+    //rotate(radians(i*-1));
     //fill(#12FFB2);
     fill(0.0*easedActivePct, 255.0*easedActivePct, 255.0*easedActivePct, 50.0*easedActivePct);
     // noFill();
-    stroke(8, 247, 184);
-    strokeWeight(4);
+    stroke(8*easedActivePct, 247*easedActivePct, 184*easedActivePct);
+    strokeWeight(4*easedActivePct);
     rectMode(CENTER);
     ellipse(0, 0, 15, 15);
 
     pushMatrix();
     rotate(radians(i*2));
-    rect(0, 0, 50, 50);
+    rect(0, 0, 70, 70);
     popMatrix();
 
     pushMatrix();
@@ -51,7 +51,7 @@ class MindFiducial extends AbstractFiducial {
     popMatrix();
 
     pushMatrix();
-    rect(0, 0, 50, 50);
+    rect(0, 0, 70, 70);
     rotate(radians(i*10));
     popMatrix();
     

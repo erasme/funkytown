@@ -11,16 +11,48 @@ class FiducialManager {
 
   void setup(MidiBus midi) {
 
-    fiducials.add(new FunFiducial    (1, midi));
-    fiducials.add(new MindFiducial (7, midi));
 
     /*
-    fiducials.add(new FunFiducial    (0, midi));
-     fiducials.add(new NatureFiducial (1, midi));
-     fiducials.add(new StrictFiducial (2, midi));
-     fiducials.add(new MindFiducial   (3, midi));
-     fiducials.add(new MindFiducial   (7, midi));
+    12 = nature
+     14 = natrure
+     18 = nature
+     13 = nature
+     11 = nature 
+     
+     7 16 0 6 9 strict
+     
+     Fun
+     17 18 4 3 
+     8 ?
+     
+     Mind 
+     2 1 
+     
+     
+     
      */
+
+    fiducials.add(new NatureFiducial    (12, midi, 6, 8));
+    fiducials.add(new NatureFiducial    (14, midi, 6, 8));
+    fiducials.add(new NatureFiducial    (18, midi, 6, 8));
+    fiducials.add(new NatureFiducial    (13, midi, 6, 8));
+    fiducials.add(new NatureFiducial    (11, midi, 6, 8));
+
+    fiducials.add(new StrictFiducial (7, midi, 6, 8));
+    fiducials.add(new StrictFiducial (16, midi, 6, 8));
+    fiducials.add(new StrictFiducial (0, midi, 6, 8));
+    fiducials.add(new StrictFiducial (6, midi, 6, 8));
+    fiducials.add(new StrictFiducial (9, midi, 6, 8));
+
+    fiducials.add(new FunFiducial    (17, midi, 6, 8));
+    fiducials.add(new FunFiducial    (18, midi, 6, 8));
+    fiducials.add(new FunFiducial    (4, midi, 6, 8));
+    fiducials.add(new FunFiducial    (5, midi, 6, 8));
+
+    fiducials.add(new MindFiducial (2, midi, 6, 8));
+    fiducials.add(new MindFiducial (1, midi, 6, 8));
+
+
 
     for (int i=0; i<fiducials.size(); i++) {
       fiducials.get(i).init();
@@ -59,11 +91,13 @@ class FiducialManager {
     float x        =   msg.get(2).floatValue();
     float y        =   msg.get(3).floatValue();
     float rotation =   radians(msg.get(4).floatValue());
-    
+
+
 
     // don't ask me why why
-    //if (x == -100.0 && y == -100.0 && rotation == 360.0 )
-    //return;
+    if (x == -100.0 && y == -100.0 && msg.get(4).floatValue() == 360.0 && added != 1 ) {
+      return;
+    }
 
 
     if (added == 1) {

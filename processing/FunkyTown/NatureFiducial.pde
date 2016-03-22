@@ -7,8 +7,8 @@ class NatureFiducial extends AbstractFiducial {
   float[] r = new float[3000]; // radius
 
 
-  NatureFiducial(int id, MidiBus midi) {
-    super(id, midi);
+  NatureFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
+    super(id, midi, midiPitchOn,midiPitchOff);
     this.isLineConnected = false;
     this.isParticleReceiver = true;
 

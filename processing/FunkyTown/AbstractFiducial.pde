@@ -19,12 +19,14 @@ class AbstractFiducial {
 
   MidiBus   midiOut;
   int       midiChannel;
-  int       midiPitch;
+  int       midiPitchOn, midiPitchOff;
+
+  Ani       pctAni;
 
   float     cumulativePct, easedCumPct;
   float     easedActivePct;
 
-  AbstractFiducial (int id, MidiBus midi) {
+  AbstractFiducial (int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
 
     this.id              = id;
     this.midiOut         = midi;
@@ -39,42 +41,59 @@ class AbstractFiducial {
     this.easedCumPct     = 0.0f;
     this.name            = this.getClass().getSimpleName();
     this.easedActivePct  = 0.0f;
+    this.midiPitchOn      = midiPitchOn;
+    this.midiPitchOff      = midiPitchOff;
+    this.midiChannel    = 1;
   }
 
   void init() {
   }
 
   void show() {
-    this.visible         = true;
-    Ani.to(this, 1.5, "easedActivePct", 1.0, Ani.QUAD_IN);
+      Ani.to(this, 1.5, "easedActivePct", 1.0, Ani.QUAD_IN);
 
-    this.countToRemove   = -1;
-    midiOut.sendNoteOn(midiChannel, 0, 0);
+    if (!this.visible) {
+      midiOut.sendNoteOn(midiChannel, midiPitchOn, 127);
+      println("send " + midiPitchOn);
+      this.countToRemove   = -1;
+    }  
+    this.visible         = true;
   }
 
   void hide() {
-    Ani.to(this, 1.5, "easedActivePct", 0.0, Ani.QUAD_OUT);
+    countToRemove = 0;
   }
 
   void remove() {
-    this.visible = false;
-    midiOut.sendNoteOff(midiChannel, 0, 0);
+    if (this.visible) {
+      this.visible = false;
+      midiOut.sendNoteOn(midiChannel, midiPitchOff, 127);
+      //println("removed");
+      println("send off ! " + midiChannel +" - " + midiPitchOff);
+    }
   }
 
   void update() {
 
-    //if (countToRemove >= 0 ) 
-    //countToRemove++;
+    if (countToRemove >= 0 && countToRemove <= removeDelay ) 
+      countToRemove++;
 
-    if (easedActivePct <= 0 ) 
-      remove();
+    if (countToRemove > removeDelay && this.visible)
+      pctAni = new Ani(this, 1.5, "easedActivePct", 0.0, Ani.QUAD_OUT, "onEnd:remove");
+
+    //if(this.visible)
+    //println((int)(easedActivePct * 127.0));
+    int value = (int)(easedActivePct * 127.0);
+    if(this.visible)
+      midi.sendControllerChange(1, 1, value);
+    
   }
 
   void setCumulativePct(float pct) {
 
 
     if (pct != this.cumulativePct ) {
-      Ani.to(this, 1.5, "easedCumPct", pct, Ani.QUAD_IN_OUT);
+      pctAni = new Ani(this, 1.5, "easedCumPct", pct, Ani.QUAD_IN_OUT);
     }
     this.cumulativePct = pct;
   }

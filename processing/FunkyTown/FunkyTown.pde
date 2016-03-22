@@ -68,11 +68,25 @@ void draw () {
   if (LIVE_MODE) {
     server.sendScreen();
   }
+  
+  
+  // pour tester
+  int value = (int)((float)(mouseX) / (float)(width) * 127.0);
+  //midi.sendControllerChange(1, 1, value); // Send a controllerChange
+    //midi.sendControllerChange(1, 1, value);
+
 }
 
 void keyPressed () {
-
-  //midi.sendNoteOn(10, 64, 127);
+  
+  println(key);
+  
+  if(key == '&' || key =='￿' )
+  return;
+  
+  
+  //if(key == 1)
+  //midi.sendControllerChange(1, key, 0); // Send a controllerChange
 }
 
 void oscEvent(OscMessage msg) {

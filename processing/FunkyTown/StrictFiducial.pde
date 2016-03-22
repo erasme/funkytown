@@ -6,8 +6,8 @@ class StrictFiducial extends AbstractFiducial {
   final static int RADIUS = 20;
   int counter;
 
-  StrictFiducial(int id, MidiBus midi) {
-    super(id, midi);
+  StrictFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
+    super(id, midi, midiPitchOn,midiPitchOff);
     this.isLineConnected = true;
     this.isParticleSender = true;
   }
@@ -29,7 +29,6 @@ class StrictFiducial extends AbstractFiducial {
 
   void hide() {
     super.hide();
-    background(0);
     counter = counter - 6;
   }
 

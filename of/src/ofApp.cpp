@@ -57,9 +57,9 @@ void ofApp::update(){
             grayDiff = grayImage;
         }
        
-        // grayDiff.blur();
-        grayDiff.threshold(threshold);
-        //grayDiff.adaptiveThreshold(threshold);
+        // grayDiff.blur(4);
+        //grayDiff.threshold(threshold);
+        grayDiff.adaptiveThreshold(threshold, 2);
 
         
         fidfinder.findFiducials( grayDiff );
@@ -75,7 +75,9 @@ void ofApp::draw(){
     grayBg.draw(20,camHeight + 40);
     grayDiff.draw(20,20);
     
-   // syphonServer.publishTexture(&grayImage.getTexture());
+    //syphonServer.publishTexture(&grayDiff.getTexture());
+    
+  //  return;
         
     // check for removed
     for(int i=0; i<fiducials.size(); i++) {
