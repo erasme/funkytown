@@ -15,11 +15,14 @@ class AbstractFiducial {
 
   int       removeDelay;
   int       countToRemove;
+  
+  Note      midiNoteIn;
+  Note      midiNoteOut;
 
   AbstractFiducial (int id) {
 
     this.id              = id;
-    this.visible         = true;
+    this.visible         = false;
     this.x               = 0;
     this.y               = 0;
     this.rotation        = 0;

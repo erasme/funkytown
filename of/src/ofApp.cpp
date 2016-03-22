@@ -22,7 +22,7 @@ void ofApp::setup(){
     grayBg.allocate(camWidth,camHeight);
     grayDiff.allocate(camWidth,camHeight);
     
-    threshold = 80;
+    threshold = 30;
     bLearnBakground = true;
     backgroundSubOn = false;
     
@@ -102,15 +102,18 @@ void ofApp::draw(){
         }
         
         if(!bExists) {
-            message.setAddress("/fiducial");
-            message.addIntArg(fiducials[i]);
-            message.addIntArg(-1);
-            message.addIntArg(0);
-            message.addIntArg(0);
-            message.addIntArg(0);
-            //oscSender.sendMessage(message, false);
-            message.clear();
             
+            ofxOscMessage       message;
+
+            int id = fiducials[i];
+            message.setAddress("/fiducial");
+            message.addIntArg(id);
+            message.addIntArg(2);
+            message.addFloatArg(99);
+            message.addFloatArg(19);
+            message.addFloatArg(3);
+            oscSender.sendMessage(message, true);
+           // return;
         }
     }
     
@@ -122,21 +125,26 @@ void ofApp::draw(){
 
         ofSetColor(255,255,255);
         //like this one below
-        cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
+       // cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
         
-        checkIfFiducialExists(&*fiducial);
+        bool exists = checkIfFiducialExists(&*fiducial);
         
+        int fiducialID  = fiducial->getId();
+        float xPos      = fiducial->getX();
+        float yPos      = fiducial->getY();
+        float angle     = fiducial->getAngle();
+        int state       = (exists) ? 0 : 1;
         
+        ofxOscMessage       message;
+
         message.setAddress("/fiducial");
-        message.addIntArg(fiducial->getId());
-        message.addIntArg(0);
-        message.addIntArg(fiducial->getX());
-        message.addIntArg(fiducial->getY());
-        message.addIntArg(fiducial->getAngleDeg());
-        //oscSender.sendMessage(message, false);
+        message.addIntArg(fiducialID);
+        message.addIntArg(state);
+        message.addFloatArg(xPos);
+        message.addFloatArg(yPos);
+        message.addFloatArg(angle);
+        oscSender.sendMessage(message, true);
         message.clear();
-        
-        
             
         
         
@@ -161,9 +169,26 @@ void ofApp::draw(){
         
     }
     
+    /*
+    for(int i=0; i<12; i++) {
+        
+        ofxOscMessage       message;
+        
+        message.setAddress("/fiducial");
+        message.addIntArg((int)ofRandom(2));
+        message.addIntArg((int)ofRandom(2));
+        message.addFloatArg(ofRandom(100));
+        message.addFloatArg(ofRandom(100));
+        message.addFloatArg(3);
+        oscSender.sendMessage(message, true);
+        
+    }
+     
+     */
+    
 }
 
-void ofApp::checkIfFiducialExists(ofxFiducial * fiducial) {
+bool ofApp::checkIfFiducialExists(ofxFiducial * fiducial) {
     
     bool bExists = false;
     for(int i=0; i<fiducials.size(); i++) {
@@ -175,18 +200,8 @@ void ofApp::checkIfFiducialExists(ofxFiducial * fiducial) {
         
     }
     
-    if(!bExists) {
-        message.setAddress("/fiducial");
-        message.addIntArg(fiducial->getId());
-        message.addIntArg(1);
-        message.addIntArg(fiducial->getX());
-        message.addIntArg(fiducial->getY());
-        message.addIntArg(fiducial->getAngleDeg());
-        oscSender.sendMessage(message, false);
-        message.clear();
-    }
-        
-    
+   
+    return bExists;
 }
 
 

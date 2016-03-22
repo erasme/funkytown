@@ -1,6 +1,6 @@
+import promidi.*;
 import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
-
 import netP5.*;
 import oscP5.*;
 import codeanticode.syphon.*;
@@ -10,8 +10,10 @@ public static boolean LIVE_MODE = true;
 
 boolean             bDebugMode = true;
 
-OscP5                oscP5;
+OscP5               oscP5;
 SyphonServer        server;
+MidiIO              midiIO;
+MidiOut             midiOut;
 FiducialManager     fiducialManager;
 ConnectionManager   connectionManager;
 
@@ -33,7 +35,7 @@ void setup() {
   if (LIVE_MODE) {
 
     OscProperties properties = new OscProperties();
-    properties.setRemoteAddress("127.0.0.1", 12345);
+    properties.setRemoteAddress("127.0.0.1", 12000);
     properties.setListeningPort(12345);
     properties.setSRSP(OscProperties.ON);
     properties.setDatagramSize(64000);
@@ -41,6 +43,10 @@ void setup() {
     oscP5 = new OscP5(this, properties);
 
     server = new SyphonServer(this, "FunkyTown Syphon");
+
+    midiIO = MidiIO.getInstance(this);
+    midiIO.printDevices();
+    midiOut = midiIO.getMidiOut(0, 0);
   }
 }
 
@@ -61,7 +67,8 @@ void keyPressed () {
 
 /* incoming osc message are forwarded to the oscEvent method. */
 void oscEvent(OscMessage msg) {
-  if (msg.checkAddrPattern("/fiducial")==true) {
+  //println(msg.checkAddrPattern("/fiducial"));
+  if (msg.checkAddrPattern("/fiducial") == true) {
     fiducialManager.onOscMessageHandler(msg);
   }
 }
