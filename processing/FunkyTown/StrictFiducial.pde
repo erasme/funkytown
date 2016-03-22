@@ -65,7 +65,7 @@ class StrictFiducial extends AbstractFiducial {
 
     pushMatrix();//pour la rotation
     translate(x, y);
-
+    rotate(rotation);
     stroke(8, 247, 184, 150);
     for (int i=0; i<nbPts-1; i++) {
       for (int j=i+1; j<nbPts; j++) {

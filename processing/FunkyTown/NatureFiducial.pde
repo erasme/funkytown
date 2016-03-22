@@ -47,6 +47,7 @@ class NatureFiducial extends AbstractFiducial {
 
     pushMatrix();//pour la rotation
     translate(x, y);
+    rotate(rotation);
 
     // create a radom set of parameters
     float newR = random(1, 7);

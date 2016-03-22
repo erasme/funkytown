@@ -38,7 +38,8 @@ if (LIVE_MODE) {
     oscP5 = new OscP5(this, properties);
 
     server = new SyphonServer(this, "FunkyTown Syphon");
-    midi = new MidiBus(this, -1, "Java Sound Synthesizer"); // Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
+    MidiBus.list();
+    midi = new MidiBus(this, -1, "VMidi 1"); // Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
 
   }
   

@@ -38,6 +38,7 @@ int i;
   i++;
   pushMatrix();
   translate(x,y);
+  rotate(rotation);
   rotate(radians(i*1));
   stroke(8,247,184);
   strokeWeight(3);
