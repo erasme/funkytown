@@ -4,15 +4,12 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    bIsFullScreen = false;
     
-   // ofSetVerticalSync(true);
-    ofSetFrameRate(15);
+    ofSetVerticalSync(true);
+    
     kinect.setRegistration(true);
-    
     kinect.init(true);
     kinect.open();
-    
     
     camWidth = kinect.width;
     camHeight = kinect.height;
@@ -43,7 +40,6 @@ void ofApp::update(){
     
     kinect.update();
     
-
     if (kinect.isFrameNew()){
         
         kinect.getTexture().readToPixels(pixels);
@@ -60,7 +56,8 @@ void ofApp::update(){
         } else {
             grayDiff = grayImage;
         }
-       // grayDiff.blur();
+       
+        // grayDiff.blur();
         //grayDiff.threshold(threshold);
         grayDiff.adaptiveThreshold(threshold);
 
@@ -74,35 +71,24 @@ void ofApp::update(){
 void ofApp::draw(){
     
     
-    if(bIsFullScreen ) {
-        grayImage.draw(0,0, camWidth, camHeight);
-
-    } else {
-    
-//    colorImg.draw(20,20);
     grayImage.draw(camWidth + 40,20);
     grayBg.draw(20,camHeight + 40);
     grayDiff.draw(20,20);
-        
-        
+    
    // syphonServer.publishTexture(&grayImage.getTexture());
         
     // check for removed
     for(int i=0; i<fiducials.size(); i++) {
         bool bExists = false;
         for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
-            
             if(fiducial->getId() == fiducials[i]) {
                 bExists = true;
                 continue;
             }
-         
-        
         }
         
         if(!bExists) {
             
-            ofxOscMessage       message;
 
             int id = fiducials[i];
             message.setAddress("/fiducial");
@@ -116,15 +102,13 @@ void ofApp::draw(){
         }
     }
     
-     
+    ofSetColor(255,255,255);
+
     for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
         
         fiducial->draw( 20, 20 );
         fiducial->drawCorners( 20, 20 );
 
-        ofSetColor(255,255,255);
-        //like this one below
-       // cout << "fiducial " << fiducial->getId() << " found at ( " << fiducial->getX() << "," << fiducial->getY() << " )" << endl;
         
         bool exists = checkIfFiducialExists(&*fiducial);
         
@@ -134,8 +118,6 @@ void ofApp::draw(){
         float angle     = fiducial->getAngle();
         int state       = (exists) ? 0 : 1;
         
-        ofxOscMessage       message;
-
         message.setAddress("/fiducial");
         message.addIntArg(fiducialID);
         message.addIntArg(state);
@@ -144,46 +126,18 @@ void ofApp::draw(){
         message.addFloatArg(angle);
         oscSender.sendMessage(message, true);
         message.clear();
-            
-        
         
     }
-        fiducials.clear();
-
-        for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
-
-            fiducials.push_back(fiducial->getId());
-
-        }
-        
-
-        
     
-    for (list<ofxFinger>::iterator finger = fidfinder.fingersList.begin(); finger != fidfinder.fingersList.end(); finger++) {
-        finger->draw(20, 20);
+    fiducials.clear();
+    for (list<ofxFiducial>::iterator fiducial = fidfinder.fiducialsList.begin(); fiducial != fidfinder.fiducialsList.end(); fiducial++) {
+        fiducials.push_back(fiducial->getId());
     }
-    
-    ofDrawBitmapString( "[space] to learn background\n[+]/[-] to adjust threshold\n[b] to remove background subtraction",
+        
+
+    ofDrawBitmapString( "[space] to learn background\n[+]/[-] to adjust threshold ["+ofToString(threshold)+"]\n[b]to remove background subtraction",
                        20, 550 );
-        
-    }
     
-    /*
-    for(int i=0; i<12; i++) {
-        
-        ofxOscMessage       message;
-        
-        message.setAddress("/fiducial");
-        message.addIntArg((int)ofRandom(2));
-        message.addIntArg((int)ofRandom(2));
-        message.addFloatArg(ofRandom(100));
-        message.addFloatArg(ofRandom(100));
-        message.addFloatArg(3);
-        oscSender.sendMessage(message, true);
-        
-    }
-     
-     */
     
 }
 
@@ -216,7 +170,6 @@ void ofApp::keyPressed  (int key){
         backgroundSubOn = false;
     } else if (key =='f') {
         ofToggleFullscreen();
-        bIsFullScreen = !bIsFullScreen;
     }
     
    
