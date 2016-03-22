@@ -10,7 +10,7 @@ class ConnectionManager {
 
   void draw() {
 
-    ArrayList<AbstractFiducial> connecteds = fiducialManager.getConnectedFiducials();
+    ArrayList<AbstractFiducial> connecteds = fiducialManager.connecteds;
     ArrayList<AbstractFiducial> receivers = new ArrayList<AbstractFiducial>();
 
     for (int i=0; i<connecteds.size(); i++) {

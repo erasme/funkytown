@@ -43,8 +43,7 @@ void ofApp::update(){
     
     kinect.update();
     
-   
-    
+
     if (kinect.isFrameNew()){
         
         kinect.getTexture().readToPixels(pixels);

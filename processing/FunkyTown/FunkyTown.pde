@@ -27,7 +27,7 @@ void settings() {
 
 void setup() {
 
-if (LIVE_MODE) {
+  if (LIVE_MODE) {
 
     OscProperties properties = new OscProperties();
     properties.setRemoteAddress("127.0.0.1", 12000);
@@ -39,22 +39,27 @@ if (LIVE_MODE) {
 
     server = new SyphonServer(this, "FunkyTown Syphon");
     MidiBus.list();
-    midi = new MidiBus(this, -1, "VMidi 1"); // Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
-
+    midi = new MidiBus(this, -1, "Bus 1"); // Create a new MidiBus with no input device and the default Java Sound Synthesizer as the output device.
   }
-  
+
   fiducialManager     = new FiducialManager();
   fiducialManager.setup(midi);
-
-  connectionManager = new ConnectionManager(fiducialManager);
   
+  connectionManager = new ConnectionManager(fiducialManager);
+
   uipanel = new UIPanel();
   uipanel.setup();
-  
+}
+
+void update() {
+  fiducialManager.update();
 }
 
 void draw () {
-
+  
+  update();
+  
+  
   background(0);
 
   connectionManager.draw();
@@ -68,6 +73,9 @@ void draw () {
 }
 
 void keyPressed () {
+  
+      //midi.sendNoteOn(10, 64, 127);
+
 }
 
 /* incoming osc message are forwarded to the oscEvent method. */

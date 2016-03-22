@@ -1,8 +1,9 @@
 class AbstractFiducial {
 
   int       id;
+  String    name;
   boolean   visible;
-
+  
   int       x;
   int       y;
   int       rotation;
@@ -15,23 +16,26 @@ class AbstractFiducial {
 
   int       removeDelay;
   int       countToRemove;
-  
+
   MidiBus   midiOut;
   int       midiChannel;
+  int       midiPitch;
+  
+  float     cumulativePct;
 
   AbstractFiducial (int id, MidiBus midi) {
 
     this.id              = id;
     this.midiOut         = midi;
-    this.visible         = false;
+    this.visible         = true;
     this.x               = 0;
     this.y               = 0;
     this.rotation        = 0;
     this.isLineConnected = false;
     this.countToRemove   = -1;
     this.removeDelay     = 20;
+    this.cumulativePct   = 0.0f;
 
-    debugImage = loadImage("img.jpg");
   }
 
   void init() {
@@ -41,8 +45,6 @@ class AbstractFiducial {
     this.visible         = true;
     this.countToRemove   = -1;
     midiOut.sendNoteOn(midiChannel, 0, 0);
-
-
   }
 
   void hide() {
@@ -52,7 +54,6 @@ class AbstractFiducial {
   void remove() {
     this.visible = false;
     midiOut.sendNoteOff(midiChannel, 0, 0);
-
   }
 
   void update() {
@@ -63,29 +64,14 @@ class AbstractFiducial {
     if (countToRemove >= removeDelay ) 
       remove();
   }
-
-
-
-  void draw () {
-
-    /*
-    for (int i=0; i<particles.size(); i++) {
-     particles.get(i).resetForce();
-     particles.get(i).addAttractionForce(x, y, width*height, .5);
-     particles.get(i).addRepulsionForce(cosPct*x, cosPct*y, 100, 1);
-     //particles.get(i).damping = (float)mouseX / (float)width;
-     
-     particles.get(i).addDampingForce();
-     particles.get(i).update();
-     
-     fill(255);
-     noStroke();
-     ellipse(particles.get(i).pos.x, particles.get(i).pos.y, 10, 10);
-     }
-     */
+  
+  void setCumulativePct(float pct) {
+      this.cumulativePct = pct;
   }
 
 
+  void draw () {
+  }
 
   float getNormalizedDistanceTo (AbstractFiducial target) {
     PVector a     = new PVector(x, y);
@@ -103,8 +89,6 @@ class AbstractFiducial {
     rotate(this.rotation);
     fill(255);
     ellipse(0, 0, 100, 100);
-    fill(255);
-    image(debugImage, -50, -50);
     popMatrix();
   }
 }

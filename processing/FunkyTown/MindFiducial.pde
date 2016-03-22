@@ -4,11 +4,10 @@ class MindFiducial extends AbstractFiducial {
 
   MindFiducial(int id, MidiBus midi) {
     super(id, midi);
+    this.name = "MindFiducial";
   }
 
   void init() {
-
-
     x = 300;
     y = 200;
     i=0;
@@ -26,7 +25,8 @@ class MindFiducial extends AbstractFiducial {
     pushMatrix();
     translate(x, y);
     rotate(rotation);
-    
+
+    //?
     pushMatrix();
     i++;
     rotate(radians(i*-1));

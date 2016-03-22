@@ -1,21 +1,22 @@
 class FiducialManager {
 
   ArrayList<AbstractFiducial> fiducials;
-
-  boolean bHasChanged = false;
+  ArrayList<AbstractFiducial> connecteds;
 
   FiducialManager() {
+    
+    fiducials = new ArrayList<AbstractFiducial>();
+    connecteds = new ArrayList<AbstractFiducial>();
+    
   }
 
   void setup(MidiBus midi) {
-    
-    
-    fiducials = new ArrayList<AbstractFiducial>();
+
+
     fiducials.add(new FunFiducial(2, midi));
     fiducials.add(new FunFiducial(0, midi));
     fiducials.add(new NatureFiducial(1, midi));
     fiducials.add(new StrictFiducial(2, midi));
-    //fiducials.add(new StrictFiducial(2));
     fiducials.add(new MindFiducial(3, midi));
     fiducials.add(new MindFiducial(7, midi));
 
@@ -23,6 +24,12 @@ class FiducialManager {
     for (int i=0; i<fiducials.size(); i++) {
       fiducials.get(i).init();
     }
+  }
+
+  void update() {
+
+    connecteds = getConnectedFiducials();
+    updateConnectedsPct();
   }
 
   void draw() {
@@ -34,8 +41,6 @@ class FiducialManager {
       if (fiducials.get(i).visible)
         fiducials.get(i).draw();
     }
-
-    bHasChanged = true;
   }
 
   int getFiducialIndexByID(int id) {
@@ -47,7 +52,6 @@ class FiducialManager {
   }
 
   void onOscMessageHandler(OscMessage msg) {
-
 
     int id       =   msg.get(0).intValue();
     int added    =   msg.get(1).intValue();
@@ -89,10 +93,34 @@ class FiducialManager {
 
     ArrayList<AbstractFiducial> connecteds = new ArrayList<AbstractFiducial>();
     for (int i=0; i<fiducials.size(); i++) {
-      if (fiducials.get(i).visible) 
+      if (fiducials.get(i).visible) {
         connecteds.add(fiducials.get(i));
+      }
     }
     return connecteds;
+  }
+
+  void updateConnectedsPct() {
+    for (int i=0; i<fiducials.size(); i++) {
+      fiducials.get(i).setCumulativePct(getConnectedsInPctFor(fiducials.get(i).name));
+    }
+  }
+
+  float getConnectedsInPctFor(String className) {
+
+    int result = 0;
+    int numConnecteds = 0;
+
+    for (int i=0; i<fiducials.size(); i++) {
+      boolean isSame = fiducials.get(i).name.equals(className);
+      if (isSame) {
+        result++;
+        if (fiducials.get(i).visible)
+          numConnecteds++;
+      }
+    }
+
+    return (float)result / (float)numConnecteds;
   }
 
   void onRemovedFiducialHandler(int id) {
