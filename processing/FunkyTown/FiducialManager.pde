@@ -11,7 +11,6 @@ class FiducialManager {
 
   void setup(MidiBus midi) {
 
-
     fiducials.add(new FunFiducial    (2, midi));
     fiducials.add(new FunFiducial    (0, midi));
     fiducials.add(new NatureFiducial (1, midi));
