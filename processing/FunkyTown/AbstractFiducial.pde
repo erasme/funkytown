@@ -15,11 +15,15 @@ class AbstractFiducial {
 
   int       removeDelay;
   int       countToRemove;
+  
+  MidiBus   midiOut;
+  int       midiChannel;
 
-  AbstractFiducial (int id) {
+  AbstractFiducial (int id, MidiBus midi) {
 
     this.id              = id;
-    this.visible         = true;
+    this.midiOut         = midi;
+    this.visible         = false;
     this.x               = 0;
     this.y               = 0;
     this.rotation        = 0;
@@ -36,6 +40,9 @@ class AbstractFiducial {
   void show() {
     this.visible         = true;
     this.countToRemove   = -1;
+    midiOut.sendNoteOn(midiChannel, 0, 0);
+
+
   }
 
   void hide() {
@@ -43,6 +50,9 @@ class AbstractFiducial {
   }
 
   void remove() {
+    this.visible = false;
+    midiOut.sendNoteOff(midiChannel, 0, 0);
+
   }
 
   void update() {
@@ -51,7 +61,7 @@ class AbstractFiducial {
       countToRemove++;
 
     if (countToRemove >= removeDelay ) 
-      this.visible = false;
+      remove();
   }
 
 

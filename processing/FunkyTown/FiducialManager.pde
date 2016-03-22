@@ -2,18 +2,22 @@ class FiducialManager {
 
   ArrayList<AbstractFiducial> fiducials;
 
+  boolean bHasChanged = false;
+
   FiducialManager() {
   }
 
-  void setup() {
+  void setup(MidiBus midi) {
+    
+    
     fiducials = new ArrayList<AbstractFiducial>();
-    fiducials.add(new FunFiducial(2));
-    fiducials.add(new FunFiducial(0));
-    fiducials.add(new NatureFiducial(1));
-    fiducials.add(new StrictFiducial(2));
+    fiducials.add(new FunFiducial(2, midi));
+    fiducials.add(new FunFiducial(0, midi));
+    fiducials.add(new NatureFiducial(1, midi));
+    fiducials.add(new StrictFiducial(2, midi));
     //fiducials.add(new StrictFiducial(2));
-    fiducials.add(new MindFiducial(3));
-    fiducials.add(new MindFiducial(7));
+    fiducials.add(new MindFiducial(3, midi));
+    fiducials.add(new MindFiducial(7, midi));
 
 
     for (int i=0; i<fiducials.size(); i++) {
@@ -30,6 +34,8 @@ class FiducialManager {
       if (fiducials.get(i).visible)
         fiducials.get(i).draw();
     }
+
+    bHasChanged = true;
   }
 
   int getFiducialIndexByID(int id) {
@@ -42,19 +48,22 @@ class FiducialManager {
 
   void onOscMessageHandler(OscMessage msg) {
 
+
     int id       =   msg.get(0).intValue();
     int added    =   msg.get(1).intValue();
-    int x        =   msg.get(2).intValue();
-    int y        =   msg.get(3).intValue();
-    int rotation =   msg.get(4).intValue();
+    float x        =   abs(msg.get(2).floatValue());
+    float y        =   abs(msg.get(3).floatValue());
+    float rotation =   abs(msg.get(4).floatValue());
 
-    println(added);
+    if (x == -100.0 && y == -100.0 && rotation == 360.0 )
+      return;
 
-    if (added == 1) {
-      onUpdateFiducialHandler(id, x, y, rotation);
-    } else if (added == -1) {
+    if (added == 0) {
+      onUpdateFiducialHandler(id, (int)x, (int)y, (int)rotation);
+    } else if (added == 2) {
       onRemoveFiducialHandler(id);
     } else {
+      onNewFiducialHandler(id);
     }
   }
 

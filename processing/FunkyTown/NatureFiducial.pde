@@ -7,8 +7,9 @@ class NatureFiducial extends AbstractFiducial {
   float[] r = new float[maxCount]; // radius
 
 
-  NatureFiducial(int id) {
-    super(id);
+  NatureFiducial(int id, MidiBus midi) {
+    super(id, midi);
+
     this.isLineConnected = false;
     this.isParticleReceiver = true;
 
@@ -46,6 +47,7 @@ class NatureFiducial extends AbstractFiducial {
 
     pushMatrix();//pour la rotation
     translate(x, y);
+    rotate(rotation);
 
     // create a radom set of parameters
     float newR = random(1, 7);
@@ -71,7 +73,7 @@ class NatureFiducial extends AbstractFiducial {
     for (int i=0; i < currentCount; i++) {
       stroke(8, 247, 184, 100);
       strokeWeight(4);
-      fill(0, 255, 255,50);
+      fill(0, 255, 255, 50);
       ellipse(posX[i], posY[i], r[i]*2, r[i]*2);
     }
     if (currentCount >= maxCount) init();

@@ -19,7 +19,6 @@ class ofApp : public ofBaseApp{
     ofxFiducialTracker	fidfinder;
     
     ofxOscSender        oscSender;
-    ofxOscMessage       message;
     
     ofxSyphonServer     syphonServer;
     
@@ -45,7 +44,7 @@ class ofApp : public ofBaseApp{
     void mousePressed(int x, int y, int button);
     void mouseReleased();
     
-    void checkIfFiducialExists(ofxFiducial * fiducial);
+    bool checkIfFiducialExists(ofxFiducial * fiducial);
     
     ofxKinect kinect;
     vector<int> fiducials;
