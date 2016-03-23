@@ -3,14 +3,24 @@ class FiducialManager {
   ArrayList<AbstractFiducial> fiducials;
   ArrayList<AbstractFiducial> connecteds;
 
+  ArrayList<Ani> aniChannels;
+  ArrayList<Float> cumulativeChannels;
+
+  MidiBus midi;
+
+  float ch0, ch1, ch2, ch3, ch4, ch5, ch6, ch7 = 0;
+
   FiducialManager() {
 
-    fiducials = new ArrayList<AbstractFiducial>();
-    connecteds = new ArrayList<AbstractFiducial>();
+    fiducials           = new ArrayList<AbstractFiducial>();
+    connecteds          = new ArrayList<AbstractFiducial>();
+    cumulativeChannels  = new ArrayList<Float>();
+    aniChannels         = new ArrayList<Ani>();
   }
 
   void setup(MidiBus midi) {
 
+    this.midi = midi;
 
     /*
     12 = nature
@@ -32,30 +42,35 @@ class FiducialManager {
      
      */
 
-    fiducials.add(new NatureFiducial    (12, midi, 6, 8));
-    fiducials.add(new NatureFiducial    (14, midi, 6, 8));
-    fiducials.add(new NatureFiducial    (18, midi, 6, 8));
-    fiducials.add(new NatureFiducial    (13, midi, 6, 8));
-    fiducials.add(new NatureFiducial    (11, midi, 6, 8));
+    fiducials.add(new NatureFiducial    (12, midi, 1, 8));
+    fiducials.add(new NatureFiducial    (14, midi, 1, 8));
+    fiducials.add(new NatureFiducial    (18, midi, 1, 8));
+    fiducials.add(new NatureFiducial    (13, midi, 1, 8));
+    fiducials.add(new NatureFiducial    (11, midi, 1, 8));
 
-    fiducials.add(new StrictFiducial (7, midi, 6, 8));
-    fiducials.add(new StrictFiducial (16, midi, 6, 8));
-    fiducials.add(new StrictFiducial (0, midi, 6, 8));
-    fiducials.add(new StrictFiducial (6, midi, 6, 8));
-    fiducials.add(new StrictFiducial (9, midi, 6, 8));
+    fiducials.add(new StrictFiducial (7, midi, 2, 8));
+    fiducials.add(new StrictFiducial (16, midi, 2, 8));
+    fiducials.add(new StrictFiducial (0, midi, 2, 8));
+    fiducials.add(new StrictFiducial (6, midi, 2, 8));
+    fiducials.add(new StrictFiducial (9, midi, 2, 8));
 
-    fiducials.add(new FunFiducial    (17, midi, 6, 8));
-    fiducials.add(new FunFiducial    (18, midi, 6, 8));
-    fiducials.add(new FunFiducial    (4, midi, 6, 8));
-    fiducials.add(new FunFiducial    (5, midi, 6, 8));
+    fiducials.add(new FunFiducial    (17, midi, 3, 8));
+    fiducials.add(new FunFiducial    (18, midi, 3, 8));
+    fiducials.add(new FunFiducial    (4, midi, 3, 8));
+    fiducials.add(new FunFiducial    (5, midi, 3, 8));
 
-    fiducials.add(new MindFiducial (2, midi, 6, 8));
-    fiducials.add(new MindFiducial (1, midi, 6, 8));
+    fiducials.add(new MindFiducial (2, midi, 4, 8));
+    fiducials.add(new MindFiducial (1, midi, 4, 8));
 
 
 
     for (int i=0; i<fiducials.size(); i++) {
       fiducials.get(i).init();
+    }
+
+    for (int i=0; i<8; i++) {
+      cumulativeChannels.add(new Float(0));
+      aniChannels.add(new Ani(this, 1.5, "ch"+i, 0.0, Ani.QUAD_OUT));
     }
   }
 
@@ -63,6 +78,30 @@ class FiducialManager {
 
     connecteds = getConnectedFiducials();
     updateConnectedsPct();
+    updateCumulativeChannels();
+
+    //midi.sendControllerChange(1, 1, (int)(ch0 * 127));
+
+   midi.sendControllerChange(1, 2, getMidiValue(ch1));
+    midi.sendControllerChange(1, 3, getMidiValue(ch2));
+    midi.sendControllerChange(1, 4, getMidiValue(ch3));
+    midi.sendControllerChange(1, 5, getMidiValue(ch4));
+    midi.sendControllerChange(1, 6, getMidiValue(ch5));
+    midi.sendControllerChange(1, 7, getMidiValue(ch6));
+    midi.sendControllerChange(1, 8, getMidiValue(ch7));
+
+
+
+    println(ch0 + " " + ch1 + " " + ch2 + " " + ch3 + " " + ch4 + " " + ch0 + " " + ch0 + " " + ch0 + " ");
+  }
+  
+  int getMidiValue(float pct) {
+    if(pct == 0) 
+    return 0;
+    
+    
+    return 50 + (int)(pct * 77.0);
+    
   }
 
   void draw() {
@@ -138,9 +177,46 @@ class FiducialManager {
 
   void updateConnectedsPct() {
     for (int i=0; i<fiducials.size(); i++) {
-
       fiducials.get(i).setCumulativePct(getConnectedsInPctFor(fiducials.get(i).name));
     }
+  }
+
+  void updateCumulativeChannels() {
+
+    //println("--");
+    for (int i=0; i<8; i++) {
+      float pct = getConnectedsChannelsPctFor(i);
+      //println(pct);
+      // if pct of i is !=, launch tween`
+      // println("test " + pct + " - " +   Float.valueOf(cumulativeChannels.get(i)));
+      if (pct != cumulativeChannels.get(i)) {
+        //println("SEND :" + pct + " - " +   Float.valueOf(cumulativeChannels.get(i)));
+        aniChannels.add(i, new Ani(this, 0.5, "ch"+i, pct, Ani.QUAD_OUT));
+        //Ani.to(this, 1.0, "ch"+i, pct, Ani.ELASTIC_OUT);
+        cumulativeChannels.add(i, new Float(pct));
+      }
+    }
+  }
+
+  float getConnectedsChannelsPctFor(int channel) {
+
+    int result = 0;
+    int numConnecteds = 0;
+
+    for (int i=0; i<fiducials.size(); i++) {
+      boolean isSame = fiducials.get(i).midiPitchOn == channel;
+
+      if (isSame) {
+        result++;
+        if (fiducials.get(i).visible)
+          numConnecteds++;
+      }
+    }
+
+    if ( numConnecteds == 0 )
+      return 0;
+
+    return (float)numConnecteds / (float)result ;
   }
 
   float getConnectedsInPctFor(String className) {

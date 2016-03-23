@@ -59,7 +59,7 @@ void ofApp::update(){
        
         // grayDiff.blur(4);
         //grayDiff.threshold(threshold);
-        grayDiff.adaptiveThreshold(threshold, 2);
+        grayDiff.adaptiveThreshold(threshold, 1);
 
         
         fidfinder.findFiducials( grayDiff );

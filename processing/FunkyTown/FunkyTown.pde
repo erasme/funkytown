@@ -68,25 +68,41 @@ void draw () {
   if (LIVE_MODE) {
     server.sendScreen();
   }
-  
-  
-  // pour tester
-  int value = (int)((float)(mouseX) / (float)(width) * 127.0);
-  //midi.sendControllerChange(1, 1, value); // Send a controllerChange
-    //midi.sendControllerChange(1, 1, value);
 
+
+  // pour tester
+  //int value = (int)((float)(mouseX) / (float)(width) * 127.0);
+  //midi.sendControllerChange(1, 1, value); // Send a controllerChange
+  //midi.sendControllerChange(1, 1, value);
 }
 
 void keyPressed () {
-  
+
   println(key);
+
+  if (key == '&' || key =='￿' )
+    return;
+/*
+  if (key == 'a')
+    midi.sendControllerChange(1, 1, 0);
+  if (key == 'z')
+    midi.sendControllerChange(1, 2, 0);
+  if (key == 'r')
+    midi.sendControllerChange(1, 3, 0);
+  if (key == 't')
+    midi.sendControllerChange(1, 4, 0);
+  if (key == 'y')
+    midi.sendControllerChange(1, 5, 0);
+  if (key == 'u')
+    midi.sendControllerChange(1, 6, 0);
+  if (key == 'i')
+    midi.sendControllerChange(1, 7, 0);
+  if (key == 'o')
+    midi.sendControllerChange(1, 8, 0);
+
+  //midi.sendControllerChange(1, 8, 0); // Send a controllerChange
   
-  if(key == '&' || key =='￿' )
-  return;
-  
-  
-  //if(key == 1)
-  //midi.sendControllerChange(1, key, 0); // Send a controllerChange
+  */
 }
 
 void oscEvent(OscMessage msg) {

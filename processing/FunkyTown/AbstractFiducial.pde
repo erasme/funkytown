@@ -22,6 +22,8 @@ class AbstractFiducial {
   int       midiPitchOn, midiPitchOff;
 
   Ani       pctAni;
+  Ani       cumulPctAni;
+
 
   float     cumulativePct, easedCumPct;
   float     easedActivePct;
@@ -36,7 +38,7 @@ class AbstractFiducial {
     this.rotation        = 0;
     this.isLineConnected = false;
     this.countToRemove   = -1;
-    this.removeDelay     = 20;
+    this.removeDelay     = 25;
     this.cumulativePct   = 0.0f;
     this.easedCumPct     = 0.0f;
     this.name            = this.getClass().getSimpleName();
@@ -50,26 +52,32 @@ class AbstractFiducial {
   }
 
   void show() {
-      Ani.to(this, 1.5, "easedActivePct", 1.0, Ani.QUAD_IN);
+    this.countToRemove   = -1;
+
+    Ani.to(this, 1.5, "easedActivePct", 1.0, Ani.QUAD_IN);
+    println("show");
+
 
     if (!this.visible) {
-      midiOut.sendNoteOn(midiChannel, midiPitchOn, 127);
-      println("send " + midiPitchOn);
+      // midiOut.sendNoteOn(midiChannel, midiPitchOn, 127);
+      // println("send " + midiPitchOn);
       this.countToRemove   = -1;
-    }  
-    this.visible         = true;
+      this.visible         = true;
+    }
   }
 
   void hide() {
+    println("hiding");
+
     countToRemove = 0;
   }
 
   void remove() {
     if (this.visible) {
       this.visible = false;
-      midiOut.sendNoteOn(midiChannel, midiPitchOff, 127);
-      //println("removed");
-      println("send off ! " + midiChannel +" - " + midiPitchOff);
+      // midiOut.sendNoteOn(midiChannel, midiPitchOff, 127);
+      println("removed");
+      // println("send off ! " + midiChannel +" - " + midiPitchOff);
     }
   }
 
@@ -78,22 +86,25 @@ class AbstractFiducial {
     if (countToRemove >= 0 && countToRemove <= removeDelay ) 
       countToRemove++;
 
-    if (countToRemove > removeDelay && this.visible)
-      pctAni = new Ani(this, 1.5, "easedActivePct", 0.0, Ani.QUAD_OUT, "onEnd:remove");
+    if (countToRemove > removeDelay && this.visible ) {
+      pctAni = null;
+      pctAni = new Ani(this, .6, "easedActivePct", 0.0, Ani.QUAD_OUT, "onEnd:remove");
+      println("going down");
+    }
 
     //if(this.visible)
     //println((int)(easedActivePct * 127.0));
-    int value = (int)(easedActivePct * 127.0);
-    if(this.visible)
-      midi.sendControllerChange(1, 1, value);
-    
+    if (cumulPctAni != null && cumulPctAni.isPlaying() ) {
+      int value = (int)(easedCumPct * 127.0);
+      // midi.sendControllerChange(1, midiPitchOn, value);
+    }
   }
 
   void setCumulativePct(float pct) {
 
 
     if (pct != this.cumulativePct ) {
-      pctAni = new Ani(this, 1.5, "easedCumPct", pct, Ani.QUAD_IN_OUT);
+      cumulPctAni = new Ani(this, 1.5, "easedCumPct", pct, Ani.QUAD_IN_OUT);
     }
     this.cumulativePct = pct;
   }
