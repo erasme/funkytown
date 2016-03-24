@@ -45,14 +45,14 @@ class ConnectionManager {
     float distance = a.getNormalizedDistanceTo(b);
     float cosPct = .5f + cos((float)millis() / (float)((float)distance * 500.0f)) * .5f;
 
-    stroke(255, 0, 0);
+    stroke(255, 200);
     strokeWeight(cosPct * 5);
     line(a.x, a.y, b.x, b.y);
   }
 
   void emitParticles(AbstractFiducial a) {
     Particle p = new Particle();
-    int range = 30;
+    int range = 5;
 
     float random   = random(1.0);
     p.damping      = .05 + random*.1;

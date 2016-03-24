@@ -1,31 +1,19 @@
 class NatureFiducial extends AbstractFiducial {
 
-  int maxCount = 1000; //max count of the cirlces
-  int currentCount = 1;
-  float[] posX = new float[3000];
-  float[] posY = new float[3000];
-  float[] r = new float[3000]; // radius
 
+  int a;
+  PImage nature;
 
-  NatureFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
-    super(id, midi, midiPitchOn,midiPitchOff);
+  NatureFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff, Color mainColor) {
+    super(id, midi, midiPitchOn, midiPitchOff, mainColor);
     this.isLineConnected = false;
     this.isParticleReceiver = true;
 
-    x = 300;
-    y = 500;
+    nature = loadImage("nature.png");
+    nature.resize(75, 75);
   }
 
   void init() {
-    x=150;
-    y=400;
-
-    currentCount = 1;
-
-    // first circle
-    posX[0] = 0;
-    posY[0] = 0;
-    r[0] = 20;
   }
 
   void show() {
@@ -38,46 +26,46 @@ class NatureFiducial extends AbstractFiducial {
 
   void draw () {
 
+    fill(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct, mainColor.getBlue()*easedActivePct);
+    stroke(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct, mainColor.getBlue()*easedActivePct);
 
     pushMatrix();//pour la rotation
     translate(x, y);
     rotate(rotation);
 
-    // create a radom set of parameters
-    float newR = random(1, 7);
-    float newX = random(-width, width+newR);
-    float newY = random(-height, height+newR);
+    pushMatrix();
+    translate(-nature.width / 2, -nature.height/2);
+    tint(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct, mainColor.getBlue()*easedActivePct, 255 * easedActivePct);
+    image(nature, 0, 0);
+    popMatrix();
 
-    float closestDist = 100;
-    int closestIndex = 100;
-    for (int i=0; i < currentCount; i++) {
-      float newDist = dist(newX, newY, posX[i], posY[i]);
-      if (newDist < closestDist) {
-        closestDist = newDist;
-        closestIndex = i;
-      }
-    }
-    float angle = atan2(newY-posY[closestIndex], newX-posX[closestIndex]);
 
-    posX[currentCount] = posX[closestIndex] + cos(angle) * (r[closestIndex]+newR);
-    posY[currentCount] = posY[closestIndex] + sin(angle) * (r[closestIndex]+newR);
-    r[currentCount] = newR;
-    
-    maxCount = (int)(easedCumPct * 3000);
-    
-    if(currentCount < maxCount-1 ) {
-      currentCount++;
+    pushMatrix();
+    rotate(0.01*a++);
+
+    strokeWeight(0);
+
+    int total = (int)(cumulativePct * 10 );
+   // println("---------------------" +cumulativePct);
+    for (int i= 0; i<total; i++) {
+      rotate(TWO_PI/total);
+      ellipse(50 *easedActivePct, 0, 5, 5);
     }
-    
-    int total = (currentCount > maxCount ) ? maxCount : currentCount;
-    for (int i=0; i < total; i++) {
-      stroke(8*easedActivePct, 247*easedActivePct, 184*easedActivePct, 100*easedActivePct);
-      strokeWeight(4);
-      fill(0.0*easedActivePct, 255.0*easedActivePct, 255.0*easedActivePct, 50.0*easedActivePct);
-      ellipse(posX[i], posY[i], r[i]*2, r[i]*2);
+
+    popMatrix();
+
+    pushMatrix();
+    //translate(width/2, height/2);
+    rotate(0.001*a++);
+    total = (int)(cumulativePct * 20 );
+
+    for (int i= 0; i<total; i++) {
+      rotate(TWO_PI/total);
+      ellipse(70 *easedActivePct, 0, 5, 5);
     }
-    fill(255,255);
-    //if (currentCount >= maxCount) init();
+
+    popMatrix();
+
     popMatrix();
   }
 }

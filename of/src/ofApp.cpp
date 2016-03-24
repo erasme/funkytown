@@ -18,6 +18,7 @@ void ofApp::setup(){
     grayImage.allocate(camWidth,camHeight);
     grayBg.allocate(camWidth,camHeight);
     grayDiff.allocate(camWidth,camHeight);
+    grayDiff2.allocate(camWidth,camHeight);
     
     threshold = 30;
     bLearnBakground = true;
@@ -27,6 +28,8 @@ void ofApp::setup(){
     fidfinder.maxFingerSize		= 25;
     fidfinder.minFingerSize		= 5;
     fidfinder.fingerSensitivity	= 0.05f; //from 0 to 2.0f
+    
+    bPublishSyphon      = false;
     
     oscSender.setup("localhost", 12345);
     syphonServer.setName("Funky Town Calibration Syphon");;
@@ -55,11 +58,13 @@ void ofApp::update(){
             grayDiff.absDiff( grayBg, grayImage );
         } else {
             grayDiff = grayImage;
+            //grayDiff2 = grayImage;
         }
        
         // grayDiff.blur(4);
         //grayDiff.threshold(threshold);
-        grayDiff.adaptiveThreshold(threshold, 1);
+        grayDiff.adaptiveThreshold(threshold, 3);
+        //grayDiff2.adaptiveThreshold(threshold);
 
         
         fidfinder.findFiducials( grayDiff );
@@ -75,10 +80,13 @@ void ofApp::draw(){
     grayBg.draw(20,camHeight + 40);
     grayDiff.draw(20,20);
     
-    //syphonServer.publishTexture(&grayDiff.getTexture());
     
-  //  return;
+    //if(bPublishSyphon) {
+  //  syphonServer.publishTexture(&grayDiff.getTexture());
+    //return;
         
+    //}
+    
     // check for removed
     for(int i=0; i<fiducials.size(); i++) {
         bool bExists = false;
@@ -174,6 +182,8 @@ void ofApp::keyPressed  (int key){
         backgroundSubOn = false;
     } else if (key =='f') {
         ofToggleFullscreen();
+    } else if (key == 's') {
+        bPublishSyphon = !bPublishSyphon;
     }
     
    

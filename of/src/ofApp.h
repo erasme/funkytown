@@ -15,7 +15,7 @@ class ofApp : public ofBaseApp{
     
     ofxCvGrayscaleImage grayImage;
     ofxCvGrayscaleImage grayBg;
-    ofxCvGrayscaleImage	grayDiff;
+    ofxCvGrayscaleImage	grayDiff, grayDiff2;
     ofxCvColorImage		colorImg;
     
     ofxKinect           kinect;
@@ -30,7 +30,8 @@ class ofApp : public ofBaseApp{
     bool				bLearnBakground;
     bool				backgroundSubOn;
     vector<int>         fiducials;
-
+    
+    bool                bPublishSyphon;
     
     
     void setup();

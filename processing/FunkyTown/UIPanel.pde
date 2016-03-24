@@ -20,7 +20,7 @@ class UIPanel {
     pushMatrix();
     //translate(325, 240);
     noFill();
-    rect(width / 2 - 545 / 2 , height / 2 - 395 / 2, 545, 395);
+    rect(width / 2 - 545 / 2, height / 2 - 395 / 2, 545, 395);
     popMatrix();
 
     pushMatrix();

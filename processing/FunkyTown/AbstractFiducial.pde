@@ -7,6 +7,8 @@ class AbstractFiducial {
   int       x;
   int       y;
   float     rotation;
+  
+  Color     mainColor;
 
   PImage    debugImage;
 
@@ -28,7 +30,7 @@ class AbstractFiducial {
   float     cumulativePct, easedCumPct;
   float     easedActivePct;
 
-  AbstractFiducial (int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
+  AbstractFiducial (int id, MidiBus midi, int midiPitchOn, int midiPitchOff, Color mainColor) {
 
     this.id              = id;
     this.midiOut         = midi;
@@ -46,6 +48,7 @@ class AbstractFiducial {
     this.midiPitchOn      = midiPitchOn;
     this.midiPitchOff      = midiPitchOff;
     this.midiChannel    = 1;
+    this.mainColor         = mainColor;
   }
 
   void init() {
@@ -54,8 +57,8 @@ class AbstractFiducial {
   void show() {
     this.countToRemove   = -1;
 
-    Ani.to(this, 1.5, "easedActivePct", 1.0, Ani.QUAD_IN);
-    println("show");
+    Ani.to(this, .6, "easedActivePct", 1.0, Ani.QUAD_IN);
+    //println("show");
 
 
     if (!this.visible) {
@@ -76,7 +79,7 @@ class AbstractFiducial {
     if (this.visible) {
       this.visible = false;
       // midiOut.sendNoteOn(midiChannel, midiPitchOff, 127);
-      println("removed");
+      //println("removed");
       // println("send off ! " + midiChannel +" - " + midiPitchOff);
     }
   }
@@ -88,16 +91,11 @@ class AbstractFiducial {
 
     if (countToRemove > removeDelay && this.visible ) {
       pctAni = null;
-      pctAni = new Ani(this, .6, "easedActivePct", 0.0, Ani.QUAD_OUT, "onEnd:remove");
-      println("going down");
+      pctAni = new Ani(this, 1.2, "easedActivePct", 0.0, Ani.QUAD_OUT, "onEnd:remove");
+      //println("going down");
     }
 
-    //if(this.visible)
-    //println((int)(easedActivePct * 127.0));
-    if (cumulPctAni != null && cumulPctAni.isPlaying() ) {
-      int value = (int)(easedCumPct * 127.0);
-      // midi.sendControllerChange(1, midiPitchOn, value);
-    }
+    
   }
 
   void setCumulativePct(float pct) {

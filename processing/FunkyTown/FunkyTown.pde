@@ -4,6 +4,7 @@ import de.looksgood.ani.easing.*;
 import netP5.*;
 import oscP5.*;
 import codeanticode.syphon.*;
+import java.awt.*;
 
 public static boolean LIVE_MODE = true;
 
@@ -62,7 +63,7 @@ void draw () {
 
   connectionManager.draw();
   fiducialManager.draw();
-  uipanel.draw();
+  //uipanel.draw();
 
 
   if (LIVE_MODE) {
@@ -82,27 +83,46 @@ void keyPressed () {
 
   if (key == '&' || key =='￿' )
     return;
-/*
+  /*
   if (key == 'a')
-    midi.sendControllerChange(1, 1, 0);
-  if (key == 'z')
-    midi.sendControllerChange(1, 2, 0);
-  if (key == 'r')
-    midi.sendControllerChange(1, 3, 0);
-  if (key == 't')
-    midi.sendControllerChange(1, 4, 0);
-  if (key == 'y')
-    midi.sendControllerChange(1, 5, 0);
-  if (key == 'u')
-    midi.sendControllerChange(1, 6, 0);
-  if (key == 'i')
-    midi.sendControllerChange(1, 7, 0);
-  if (key == 'o')
-    midi.sendControllerChange(1, 8, 0);
-
-  //midi.sendControllerChange(1, 8, 0); // Send a controllerChange
-  
-  */
+   midi.sendControllerChange(1, 1, 0);
+   if (key == 'z')
+   midi.sendControllerChange(1, 2, 0);
+   if (key == 'r')
+   midi.sendControllerChange(1, 3, 0);
+   if (key == 't')
+   midi.sendControllerChange(1, 4, 0);
+   if (key == 'y')
+   midi.sendControllerChange(1, 5, 0);
+   if (key == 'u')
+   midi.sendControllerChange(1, 6, 0);
+   if (key == 'i')
+   midi.sendControllerChange(1, 7, 0);
+   if (key == 'o')
+   midi.sendControllerChange(1, 8, 0);
+   
+   
+   if (key == 'q')
+   midi.sendControllerChange(1, 9, 0);
+   if (key == 's')
+   midi.sendControllerChange(1, 10, 0);
+   if (key == 'd')
+   midi.sendControllerChange(1, 11, 0);
+   if (key == 'f')
+   midi.sendControllerChange(1, 12, 0);
+   if (key == 'g')
+   midi.sendControllerChange(1, 13, 0);
+   if (key == 'h')
+   midi.sendControllerChange(1, 14, 0);
+   if (key == 'j')
+   midi.sendControllerChange(1, 15, 0);
+   if (key == 'k')
+   midi.sendControllerChange(1, 16, 0);
+   
+   */
+   //midi.sendControllerChange(1, 8, 0); // Send a controllerChange
+   
+   
 }
 
 void oscEvent(OscMessage msg) {

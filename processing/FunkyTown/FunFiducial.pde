@@ -4,8 +4,8 @@ class FunFiducial extends AbstractFiducial {
   float xoff=0.0;
   int i;
 
-  FunFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
-    super(id, midi, midiPitchOn,midiPitchOff);
+  FunFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff, Color mainColor) {
+    super(id, midi, midiPitchOn,midiPitchOff, mainColor);
         this.isParticleReceiver = true;
 
     //this.name = "FunFiducial";
@@ -35,12 +35,14 @@ class FunFiducial extends AbstractFiducial {
     i++;
     pushMatrix();
     translate(x, y);
-    fill(28*easedActivePct, 247*easedActivePct, 184*easedActivePct);
+    stroke(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct,  mainColor.getBlue()*easedActivePct);
+
+    fill(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct,  mainColor.getBlue()*easedActivePct);
     ellipse(0,0,lineLength/2*easedActivePct,lineLength/2*easedActivePct);
     rotate(rotation);
     pushMatrix();
     rotate(radians(i*1));
-    stroke(8*easedActivePct, 247*easedActivePct, 184*easedActivePct);
+    stroke(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct,  mainColor.getBlue()*easedActivePct, 225 * easedActivePct);
     strokeWeight(3*easedActivePct);
     line(radius, 0, lineLength, 0);
     rotate(radians(i*1.2));

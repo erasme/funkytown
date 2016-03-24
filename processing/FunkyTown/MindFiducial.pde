@@ -2,8 +2,8 @@ class MindFiducial extends AbstractFiducial {
   int i;
   int counter;
 
-  MindFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff) {
-    super(id, midi, midiPitchOn,midiPitchOff);
+  MindFiducial(int id, MidiBus midi, int midiPitchOn, int midiPitchOff, Color mainColor) {
+    super(id, midi, midiPitchOn, midiPitchOff, mainColor);
   }
 
   void init() {
@@ -27,15 +27,15 @@ class MindFiducial extends AbstractFiducial {
 
     //?
     pushMatrix();
-    
-    
-    
+
+
+
     i++;
     //rotate(radians(i*-1));
     //fill(#12FFB2);
-    fill(0.0*easedActivePct, 255.0*easedActivePct, 255.0*easedActivePct, 50.0*easedActivePct);
+    fill(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct, mainColor.getBlue()*easedActivePct, 20 * easedActivePct);
     // noFill();
-    stroke(8*easedActivePct, 247*easedActivePct, 184*easedActivePct);
+    stroke(mainColor.getRed() *easedActivePct, mainColor.getGreen()*easedActivePct, mainColor.getBlue()*easedActivePct);
     strokeWeight(4*easedActivePct);
     rectMode(CENTER);
     ellipse(0, 0, 15, 15);
@@ -46,15 +46,15 @@ class MindFiducial extends AbstractFiducial {
     popMatrix();
 
     pushMatrix();
-    rect(0, 0, 25, 25);
+    rect(0, 0, 25+ 40 * cumulativePct, 25 + 40 * cumulativePct);
     rotate(radians(i*10));
     popMatrix();
 
     pushMatrix();
-    rect(0, 0, 70, 70);
+    rect(0, 0, 70+ 40 * cumulativePct, 70 + 40 * cumulativePct);
     rotate(radians(i*10));
     popMatrix();
-    
+
     popMatrix();
 
     popMatrix();
